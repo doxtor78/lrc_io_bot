@@ -1,0 +1,369 @@
+2025-05-30 21:20:35,891 - ERROR - Error fetching binance BTC: 'lastPrice'
+2025-05-30 21:20:36,300 - ERROR - Error fetching okx BTC: No data found for BTC on okx
+2025-05-30 21:20:36,723 - ERROR - Error fetching bybit BTC: 'lastPrice'
+2025-05-30 21:20:37,417 - ERROR - Error fetching bitget BTC: 'NoneType' object is not iterable
+2025-05-30 21:20:37,630 - ERROR - Error fetching bitmex BTC: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:20:38,391 - ERROR - Error fetching kucoin BTC: No data found for BTC on kucoin
+2025-05-30 21:20:41,295 - INFO - Updated gate BTC: 0.000100 @ $104471.30
+2025-05-30 21:20:42,314 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:20:42,733 - ERROR - Error fetching huobi BTC: 'last_price'
+2025-05-30 21:20:43,350 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:20:43,826 - ERROR - Error fetching deribit BTC: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:20:44,259 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:20:44,259 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:21:56,857 - ERROR - Error fetching binance BTC: 'lastPrice'
+2025-05-30 21:21:57,296 - ERROR - Error fetching okx BTC: No data found for BTC on okx
+2025-05-30 21:21:57,834 - ERROR - Error fetching bybit BTC: 'lastPrice'
+2025-05-30 21:21:58,315 - ERROR - Error fetching bitget BTC: 'NoneType' object is not iterable
+2025-05-30 21:21:58,398 - ERROR - Error fetching bitmex BTC: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:21:58,946 - ERROR - Error fetching kucoin BTC: No data found for BTC on kucoin
+2025-05-30 21:22:01,620 - INFO - Updated gate BTC: 0.000100 @ $104631.60
+2025-05-30 21:22:02,865 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:22:03,099 - ERROR - Error fetching huobi BTC: 'last_price'
+2025-05-30 21:22:03,634 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:22:04,077 - ERROR - Error fetching deribit BTC: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:22:04,614 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:22:04,615 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:39:38,886 - ERROR - Error fetching binance BTC: 'lastPrice'
+2025-05-30 21:39:39,311 - ERROR - Error fetching okx BTC: No data found for BTC on okx
+2025-05-30 21:39:39,870 - ERROR - Error fetching bybit BTC: 'lastPrice'
+2025-05-30 21:39:40,474 - ERROR - Error fetching bitget BTC: 'NoneType' object is not iterable
+2025-05-30 21:39:40,698 - ERROR - Error fetching bitmex BTC: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:39:41,448 - ERROR - Error fetching kucoin BTC: No data found for BTC on kucoin
+2025-05-30 21:39:44,222 - INFO - Updated gate BTC: 0.000100 @ $104669.80
+2025-05-30 21:39:45,356 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:39:45,715 - ERROR - Error fetching huobi BTC: 'last_price'
+2025-05-30 21:39:46,248 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:39:46,737 - ERROR - Error fetching deribit BTC: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:39:47,074 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:39:47,074 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:42:07,795 - INFO - Updated binance BTC: 0.000100 @ $0.00
+2025-05-30 21:42:08,223 - ERROR - Error fetching okx BTC: No data found for BTC on okx
+2025-05-30 21:42:08,798 - INFO - Updated bybit BTC: 0.000100 @ $0.00
+2025-05-30 21:42:09,306 - ERROR - Error fetching bitget BTC: Data parsing error: 'NoneType' object is not iterable
+2025-05-30 21:42:09,403 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:42:10,082 - ERROR - Error fetching kucoin BTC: No data found for BTC on kucoin
+2025-05-30 21:42:15,374 - INFO - Updated gate BTC: 0.000100 @ $104662.00
+2025-05-30 21:42:15,966 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:42:16,238 - INFO - Updated huobi BTC: 0.000100 @ $0.00
+2025-05-30 21:42:16,805 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:42:17,279 - ERROR - Error fetching deribit BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:42:17,636 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:42:17,637 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:42:39,445 - INFO - Updated binance BTC: 0.000100 @ $0.00
+2025-05-30 21:42:39,893 - ERROR - Error fetching okx BTC: No data found for BTC on okx
+2025-05-30 21:42:40,453 - INFO - Updated bybit BTC: 0.000100 @ $0.00
+2025-05-30 21:42:40,950 - ERROR - Error fetching bitget BTC: Data parsing error: 'NoneType' object is not iterable
+2025-05-30 21:42:41,135 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:42:42,935 - ERROR - Error fetching kucoin BTC: No data found for BTC on kucoin
+2025-05-30 21:42:46,477 - INFO - Updated gate BTC: 0.000100 @ $104661.50
+2025-05-30 21:42:47,399 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:42:47,887 - INFO - Updated huobi BTC: 0.000100 @ $0.00
+2025-05-30 21:42:48,706 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:42:49,327 - ERROR - Error fetching deribit BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:42:49,626 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:42:49,626 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:43:09,012 - INFO - Updated binance BTC: 0.000100 @ $0.00
+2025-05-30 21:43:09,400 - ERROR - Error fetching okx BTC: No data found for BTC on okx
+2025-05-30 21:43:10,011 - INFO - Updated bybit BTC: 0.000100 @ $0.00
+2025-05-30 21:43:11,010 - ERROR - Error fetching bitget BTC: Data parsing error: 'NoneType' object is not iterable
+2025-05-30 21:43:11,175 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:43:12,227 - ERROR - Error fetching kucoin BTC: No data found for BTC on kucoin
+2025-05-30 21:43:15,686 - INFO - Updated gate BTC: 0.000100 @ $104661.60
+2025-05-30 21:43:16,645 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:43:16,956 - INFO - Updated huobi BTC: 0.000100 @ $0.00
+2025-05-30 21:43:17,456 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:43:18,185 - ERROR - Error fetching deribit BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:43:18,606 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:43:18,606 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:44:13,426 - INFO - Updated binance BTC: 0.000100 @ $104655.58
+2025-05-30 21:44:13,845 - ERROR - Error fetching okx BTC: No data found for BTC on okx
+2025-05-30 21:44:14,389 - INFO - Updated bybit BTC: 0.000100 @ $0.00
+2025-05-30 21:44:14,883 - ERROR - Error fetching bitget BTC: Data parsing error: 'NoneType' object is not iterable
+2025-05-30 21:44:17,283 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:44:18,973 - ERROR - Error fetching kucoin BTC: No data found for BTC on kucoin
+2025-05-30 21:44:22,341 - INFO - Updated gate BTC: 0.000100 @ $104654.16
+2025-05-30 21:44:22,908 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:44:23,250 - INFO - Updated huobi BTC: 0.000100 @ $0.00
+2025-05-30 21:44:23,716 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:44:26,914 - ERROR - Error fetching deribit BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:44:27,282 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:44:27,283 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:45:18,914 - INFO - Updated binance BTC: 0.000100 @ $104644.80
+2025-05-30 21:45:19,410 - ERROR - Error fetching okx BTC: No data found for BTC on okx
+2025-05-30 21:45:19,811 - INFO - Updated bybit BTC: 0.000100 @ $0.00
+2025-05-30 21:45:20,326 - ERROR - Error fetching bitget BTC: No data found for BTC on bitget
+2025-05-30 21:45:22,744 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:45:24,575 - ERROR - Error fetching kucoin BTC: No data found for BTC on kucoin
+2025-05-30 21:45:27,271 - INFO - Updated gate BTC: 0.000100 @ $104645.90
+2025-05-30 21:45:27,809 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:45:28,094 - INFO - Updated huobi BTC: 0.000100 @ $0.00
+2025-05-30 21:45:28,615 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:45:31,791 - ERROR - Error fetching deribit BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:45:32,099 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:45:32,099 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:46:07,814 - INFO - Updated binance BTC: 0.000100 @ $104675.60
+2025-05-30 21:46:08,254 - ERROR - Error fetching okx BTC: No data found for BTC on okx
+2025-05-30 21:46:08,815 - INFO - Updated bybit BTC: 0.000100 @ $0.00
+2025-05-30 21:46:09,442 - ERROR - Error fetching bitget BTC: No data found for BTC on bitget
+2025-05-30 21:46:11,788 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:46:12,346 - ERROR - Error fetching kucoin BTC: No data found for BTC on kucoin
+2025-05-30 21:46:15,438 - INFO - Updated gate BTC: 0.000100 @ $104671.46
+2025-05-30 21:46:16,008 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:46:16,419 - INFO - Updated huobi BTC: 0.000100 @ $0.00
+2025-05-30 21:46:16,989 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:46:20,255 - ERROR - Error fetching deribit BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:46:20,695 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:46:20,695 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:46:58,800 - INFO - Updated binance BTC: 0.000100 @ $104674.20
+2025-05-30 21:46:59,241 - ERROR - Error fetching okx BTC: No data found for BTC on okx
+2025-05-30 21:47:00,058 - INFO - Updated bybit BTC: 0.000100 @ $104677.00
+2025-05-30 21:47:00,538 - ERROR - Error fetching bitget BTC: No data found for BTC on bitget
+2025-05-30 21:47:03,146 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:47:03,720 - ERROR - Error fetching kucoin BTC: No data found for BTC on kucoin
+2025-05-30 21:47:07,320 - INFO - Updated gate BTC: 0.000100 @ $104695.70
+2025-05-30 21:47:08,293 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:47:09,246 - ERROR - Error fetching huobi BTC: No data found for BTC on huobi
+2025-05-30 21:47:09,847 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:47:13,103 - ERROR - Error fetching deribit BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:47:13,381 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:47:13,382 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:47:50,921 - INFO - Updated binance BTC: 0.000100 @ $104682.19
+2025-05-30 21:47:51,327 - INFO - Updated okx BTC: 0.000100 @ $0.00
+2025-05-30 21:47:52,328 - INFO - Updated bybit BTC: 0.000100 @ $104673.40
+2025-05-30 21:47:52,819 - ERROR - Error fetching bitget BTC: No data found for BTC on bitget
+2025-05-30 21:47:55,148 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:47:55,811 - INFO - Updated kucoin BTC: 0.000370 @ $104708.60
+2025-05-30 21:47:58,785 - INFO - Updated gate BTC: 0.000100 @ $104670.76
+2025-05-30 21:47:59,820 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:48:00,817 - ERROR - Error fetching huobi BTC: No data found for BTC on huobi
+2025-05-30 21:48:01,368 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:48:04,611 - ERROR - Error fetching deribit BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:48:04,948 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:48:04,948 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:48:41,330 - INFO - Updated binance BTC: 0.000100 @ $104672.50
+2025-05-30 21:48:42,178 - INFO - Updated okx BTC: 0.000100 @ $104669.60
+2025-05-30 21:48:42,958 - INFO - Updated bybit BTC: 0.000100 @ $104677.50
+2025-05-30 21:48:43,468 - ERROR - Error fetching bitget BTC: No data found for BTC on bitget
+2025-05-30 21:48:45,763 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:48:46,742 - INFO - Updated kucoin BTC: 0.000370 @ $104701.77
+2025-05-30 21:48:49,567 - INFO - Updated gate BTC: 0.000100 @ $104675.90
+2025-05-30 21:48:50,500 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:48:51,438 - ERROR - Error fetching huobi BTC: No data found for BTC on huobi
+2025-05-30 21:48:51,950 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:48:55,236 - ERROR - Error fetching deribit BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:48:55,556 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:48:55,557 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:49:39,373 - INFO - Updated binance BTC: 0.000100 @ $104640.20
+2025-05-30 21:49:40,197 - INFO - Updated okx BTC: 0.000100 @ $104638.60
+2025-05-30 21:49:41,142 - INFO - Updated bybit BTC: 0.000100 @ $104646.20
+2025-05-30 21:49:41,632 - ERROR - Error fetching bitget BTC: No data found for BTC on bitget
+2025-05-30 21:49:44,027 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:49:44,614 - INFO - Updated kucoin BTC: 0.000370 @ $104649.39
+2025-05-30 21:49:48,299 - INFO - Updated gate BTC: 0.000100 @ $104659.50
+2025-05-30 21:49:49,235 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:49:50,171 - ERROR - Error fetching huobi BTC: No data found for BTC on huobi
+2025-05-30 21:49:50,644 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:49:53,944 - ERROR - Error fetching deribit BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-30 21:49:54,316 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:49:54,316 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:51:57,881 - INFO - Updated binance BTC: 0.000100 @ $104715.00
+2025-05-30 21:51:59,192 - INFO - Updated okx BTC: 0.000100 @ $104712.50
+2025-05-30 21:52:00,369 - INFO - Updated bybit BTC: 0.000100 @ $104721.80
+2025-05-30 21:52:01,068 - ERROR - Error fetching bitget BTC: No data found for BTC on bitget
+2025-05-30 21:52:01,439 - INFO - Updated bitmex BTC: 0.000036 @ $104768.33
+2025-05-30 21:52:02,560 - INFO - Updated kucoin BTC: 0.000370 @ $104743.98
+2025-05-30 21:52:07,049 - INFO - Updated gate BTC: 0.000100 @ $104734.10
+2025-05-30 21:52:08,094 - ERROR - Error fetching mexc BTC: No data found for BTC on mexc
+2025-05-30 21:52:09,033 - ERROR - Error fetching huobi BTC: No data found for BTC on huobi
+2025-05-30 21:52:09,786 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:52:12,745 - ERROR - Error fetching deribit BTC: No data found for BTC on deribit
+2025-05-30 21:52:14,395 - ERROR - Error fetching kraken BTC: No data found for BTC on kraken
+2025-05-30 21:52:14,395 - ERROR - Error fetching coinglass BTC: Coinglass API key required
+2025-05-30 21:53:45,679 - INFO - Updated binance BTC: 0.000100 @ $104761.70
+2025-05-30 21:53:46,632 - INFO - Updated okx BTC: 0.000100 @ $104758.30
+2025-05-30 21:53:47,774 - INFO - Updated bybit BTC: 0.000100 @ $104780.60
+2025-05-30 21:53:48,289 - INFO - Updated bitmex BTC: 0.000036 @ $104803.85
+2025-05-30 21:53:49,128 - INFO - Updated kucoin BTC: 0.000370 @ $104780.62
+2025-05-30 21:53:51,587 - INFO - Updated gate BTC: 0.000100 @ $104772.40
+2025-05-30 21:53:52,186 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 21:55:10,201 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-30 21:55:10,202 - INFO - [33mPress CTRL+C to quit[0m
+2025-05-30 21:57:56,606 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5002
+2025-05-30 21:57:56,607 - INFO - [33mPress CTRL+C to quit[0m
+2025-05-30 21:57:56,608 - INFO -  * Restarting with stat
+2025-05-30 21:57:56,888 - WARNING -  * Debugger is active!
+2025-05-30 21:57:56,921 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 21:58:14,869 - INFO - 127.0.0.1 - - [30/May/2025 21:58:14] "[35m[1mGET /funding-rates/matrix HTTP/1.1[0m" 500 -
+2025-05-30 21:58:15,792 - INFO - 127.0.0.1 - - [30/May/2025 21:58:15] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 21:58:15,844 - INFO - 127.0.0.1 - - [30/May/2025 21:58:15] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 21:58:15,947 - INFO - 127.0.0.1 - - [30/May/2025 21:58:15] "GET / HTTP/1.1" 200 -
+2025-05-30 21:58:16,401 - INFO - 127.0.0.1 - - [30/May/2025 21:58:16] "[35m[1mGET /funding-rates/matrix HTTP/1.1[0m" 500 -
+2025-05-30 21:58:16,856 - INFO - 127.0.0.1 - - [30/May/2025 21:58:16] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 21:58:39,170 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/funding_rates.py', reloading
+2025-05-30 21:58:39,216 - INFO -  * Restarting with stat
+2025-05-30 21:58:39,632 - WARNING -  * Debugger is active!
+2025-05-30 21:58:39,658 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 21:58:40,722 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/funding_rates.py', reloading
+2025-05-30 21:58:40,759 - INFO -  * Restarting with stat
+2025-05-30 21:58:41,058 - WARNING -  * Debugger is active!
+2025-05-30 21:58:41,081 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 21:59:19,920 - INFO - 127.0.0.1 - - [30/May/2025 21:59:19] "GET / HTTP/1.1" 200 -
+2025-05-30 21:59:19,963 - INFO - 127.0.0.1 - - [30/May/2025 21:59:19] "[35m[1mGET /funding-rates/matrix HTTP/1.1[0m" 500 -
+2025-05-30 21:59:20,717 - INFO - 127.0.0.1 - - [30/May/2025 21:59:20] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 21:59:43,804 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/funding_rates.py', reloading
+2025-05-30 21:59:43,866 - INFO -  * Restarting with stat
+2025-05-30 21:59:44,282 - WARNING -  * Debugger is active!
+2025-05-30 21:59:44,310 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 21:59:44,894 - INFO - Updated binance BTC: 0.000100 @ $104869.07
+2025-05-30 21:59:46,109 - INFO - Updated okx BTC: 0.000100 @ $104870.40
+2025-05-30 21:59:47,222 - INFO - Updated bybit BTC: 0.000100 @ $104875.00
+2025-05-30 21:59:47,674 - INFO - Updated bitmex BTC: 0.000036 @ $104917.85
+2025-05-30 21:59:49,613 - INFO - Updated kucoin BTC: 0.000370 @ $104905.50
+2025-05-30 21:59:50,503 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/app.py', reloading
+2025-05-30 21:59:50,551 - INFO -  * Restarting with stat
+2025-05-30 21:59:50,895 - WARNING -  * Debugger is active!
+2025-05-30 21:59:50,922 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 21:59:51,484 - INFO - Updated binance BTC: 0.000100 @ $104878.15
+2025-05-30 21:59:52,552 - INFO - Updated okx BTC: 0.000100 @ $104880.00
+2025-05-30 21:59:53,672 - INFO - Updated bybit BTC: 0.000100 @ $104874.90
+2025-05-30 21:59:54,041 - INFO - Updated bitmex BTC: 0.000036 @ $104923.73
+2025-05-30 21:59:55,033 - INFO - Updated kucoin BTC: 0.000370 @ $104912.28
+2025-05-30 21:59:57,675 - INFO - Updated gate BTC: 0.000100 @ $104876.70
+2025-05-30 21:59:59,633 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 22:00:13,536 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/app.py', reloading
+2025-05-30 22:00:13,579 - INFO -  * Restarting with stat
+2025-05-30 22:00:13,965 - WARNING -  * Debugger is active!
+2025-05-30 22:00:13,992 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 22:00:14,496 - INFO - Updated binance BTC: 0.000100 @ $104851.60
+2025-05-30 22:00:16,306 - INFO - Updated okx BTC: 0.000100 @ $104842.50
+2025-05-30 22:00:21,773 - INFO - Updated bybit BTC: 0.000100 @ $104848.50
+2025-05-30 22:00:22,134 - INFO - Updated bitmex BTC: 0.000036 @ $104898.25
+2025-05-30 22:00:23,025 - INFO - Updated kucoin BTC: 0.000370 @ $104886.47
+2025-05-30 22:00:25,409 - INFO - Updated gate BTC: 0.000100 @ $104846.57
+2025-05-30 22:00:25,992 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 22:00:37,793 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5003
+2025-05-30 22:00:37,794 - INFO - [33mPress CTRL+C to quit[0m
+2025-05-30 22:00:37,795 - INFO -  * Restarting with stat
+2025-05-30 22:00:38,073 - WARNING -  * Debugger is active!
+2025-05-30 22:00:38,099 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 22:00:38,334 - INFO - Updated binance BTC: 0.000100 @ $104873.50
+2025-05-30 22:00:38,613 - INFO - Updated binance BTC: 0.000100 @ $104873.50
+2025-05-30 22:00:39,390 - INFO - Updated okx BTC: 0.000100 @ $104866.70
+2025-05-30 22:00:39,674 - INFO - Updated okx BTC: 0.000100 @ $104864.50
+2025-05-30 22:00:40,550 - INFO - Updated bybit BTC: 0.000100 @ $104868.10
+2025-05-30 22:00:40,880 - INFO - Updated bitmex BTC: 0.000036 @ $104921.55
+2025-05-30 22:00:41,193 - INFO - Updated bybit BTC: 0.000100 @ $104868.00
+2025-05-30 22:00:41,518 - INFO - Updated bitmex BTC: 0.000036 @ $104921.55
+2025-05-30 22:00:42,290 - INFO - Updated kucoin BTC: 0.000370 @ $104875.49
+2025-05-30 22:00:44,355 - INFO - Updated kucoin BTC: 0.000370 @ $104898.00
+2025-05-30 22:00:44,714 - INFO - Updated gate BTC: 0.000100 @ $104868.24
+2025-05-30 22:00:45,310 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 22:00:46,822 - INFO - Updated gate BTC: 0.000100 @ $104868.24
+2025-05-30 22:00:47,415 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 22:00:57,655 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/funding_rates.py', reloading
+2025-05-30 22:00:57,710 - INFO -  * Restarting with stat
+2025-05-30 22:00:58,086 - WARNING -  * Debugger is active!
+2025-05-30 22:00:58,111 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 22:00:58,176 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/funding_rates.py', reloading
+2025-05-30 22:00:58,227 - INFO -  * Restarting with stat
+2025-05-30 22:00:58,524 - WARNING -  * Debugger is active!
+2025-05-30 22:00:58,551 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 22:00:58,691 - INFO - Updated binance BTC: 0.000100 @ $104864.10
+2025-05-30 22:00:59,182 - INFO - Updated binance BTC: 0.000100 @ $104864.10
+2025-05-30 22:00:59,718 - INFO - Updated okx BTC: 0.000100 @ $104861.60
+2025-05-30 22:01:00,279 - INFO - Updated okx BTC: 0.000100 @ $104860.40
+2025-05-30 22:01:00,892 - INFO - Updated bybit BTC: 0.000100 @ $104868.10
+2025-05-30 22:01:01,212 - INFO - Updated bitmex BTC: 0.000036 @ $104910.63
+2025-05-30 22:01:01,770 - INFO - Updated bybit BTC: 0.000100 @ $104868.10
+2025-05-30 22:01:01,950 - INFO - Updated kucoin BTC: 0.000370 @ $104903.22
+2025-05-30 22:01:02,269 - INFO - Updated bitmex BTC: 0.000036 @ $104910.63
+2025-05-30 22:01:03,370 - INFO - Updated kucoin BTC: 0.000370 @ $104903.57
+2025-05-30 22:01:04,813 - INFO - Updated gate BTC: 0.000100 @ $104866.93
+2025-05-30 22:01:05,393 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 22:01:06,116 - INFO - Updated gate BTC: 0.000100 @ $104868.00
+2025-05-30 22:01:07,425 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 22:01:18,163 - INFO - 127.0.0.1 - - [30/May/2025 22:01:18] "GET / HTTP/1.1" 200 -
+2025-05-30 22:01:18,221 - INFO - 127.0.0.1 - - [30/May/2025 22:01:18] "[35m[1mGET /funding-rates/matrix HTTP/1.1[0m" 500 -
+2025-05-30 22:01:18,478 - INFO - 127.0.0.1 - - [30/May/2025 22:01:18] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-05-30 22:01:19,152 - INFO - 127.0.0.1 - - [30/May/2025 22:01:19] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 22:01:43,448 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/app.py', reloading
+2025-05-30 22:01:43,494 - INFO -  * Restarting with stat
+2025-05-30 22:01:43,709 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/app.py', reloading
+2025-05-30 22:01:43,756 - INFO -  * Restarting with stat
+2025-05-30 22:01:43,898 - WARNING -  * Debugger is active!
+2025-05-30 22:01:43,934 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 22:01:44,074 - WARNING -  * Debugger is active!
+2025-05-30 22:01:44,099 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 22:01:45,370 - INFO - Updated binance BTC: 0.000100 @ $104917.23
+2025-05-30 22:01:45,683 - INFO - Updated binance BTC: 0.000100 @ $104922.00
+2025-05-30 22:01:46,567 - INFO - Updated okx BTC: 0.000100 @ $104914.90
+2025-05-30 22:01:46,680 - INFO - Updated okx BTC: 0.000100 @ $104914.10
+2025-05-30 22:01:47,751 - INFO - Updated bybit BTC: 0.000100 @ $104917.60
+2025-05-30 22:01:47,894 - INFO - Updated bybit BTC: 0.000100 @ $104917.60
+2025-05-30 22:01:48,071 - INFO - Updated bitmex BTC: 0.000036 @ $104917.51
+2025-05-30 22:01:48,274 - INFO - Updated bitmex BTC: 0.000036 @ $104917.51
+2025-05-30 22:01:48,846 - INFO - Updated kucoin BTC: 0.000370 @ $104945.56
+2025-05-30 22:01:49,058 - INFO - Updated kucoin BTC: 0.000370 @ $104944.79
+2025-05-30 22:01:51,740 - INFO - Updated gate BTC: 0.000100 @ $104914.33
+2025-05-30 22:01:51,801 - INFO - Updated gate BTC: 0.000100 @ $104914.33
+2025-05-30 22:01:52,317 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 22:01:52,378 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 22:01:58,046 - INFO - 127.0.0.1 - - [30/May/2025 22:01:58] "GET / HTTP/1.1" 200 -
+2025-05-30 22:01:58,095 - INFO - 127.0.0.1 - - [30/May/2025 22:01:58] "GET /funding-rates/matrix HTTP/1.1" 200 -
+2025-05-30 22:01:58,526 - INFO - 127.0.0.1 - - [30/May/2025 22:01:58] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 22:05:39,566 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/funding_rates.py', reloading
+2025-05-30 22:05:39,618 - INFO -  * Restarting with stat
+2025-05-30 22:05:39,741 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/funding_rates.py', reloading
+2025-05-30 22:05:39,793 - INFO -  * Restarting with stat
+2025-05-30 22:05:40,056 - WARNING -  * Debugger is active!
+2025-05-30 22:05:40,083 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 22:05:40,090 - WARNING -  * Debugger is active!
+2025-05-30 22:05:40,117 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 22:05:40,738 - INFO - Updated binance BTC: 0.000100 @ $104867.45
+2025-05-30 22:05:40,750 - INFO - Updated binance BTC: 0.000100 @ $104857.10
+2025-05-30 22:05:42,053 - INFO - Updated okx BTC: 0.000100 @ $104826.80
+2025-05-30 22:05:42,245 - INFO - Updated okx BTC: 0.000100 @ $104824.40
+2025-05-30 22:05:43,245 - INFO - Updated bybit BTC: 0.000100 @ $104836.80
+2025-05-30 22:05:43,259 - INFO - Updated bybit BTC: 0.000100 @ $104836.80
+2025-05-30 22:05:43,720 - INFO - Updated bitmex BTC: 0.000036 @ $104885.29
+2025-05-30 22:05:43,720 - INFO - Updated bitmex BTC: 0.000036 @ $104885.29
+2025-05-30 22:05:44,554 - INFO - Updated kucoin BTC: 0.000370 @ $104870.20
+2025-05-30 22:05:45,817 - INFO - Updated kucoin BTC: 0.000370 @ $104912.09
+2025-05-30 22:05:47,199 - INFO - 127.0.0.1 - - [30/May/2025 22:05:47] "GET / HTTP/1.1" 200 -
+2025-05-30 22:05:47,272 - INFO - 127.0.0.1 - - [30/May/2025 22:05:47] "GET /funding-rates/matrix HTTP/1.1" 200 -
+2025-05-30 22:05:47,383 - INFO - Updated gate BTC: 0.000100 @ $104831.70
+2025-05-30 22:05:48,207 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 22:05:48,230 - INFO - 127.0.0.1 - - [30/May/2025 22:05:48] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 22:05:51,745 - INFO - Updated gate BTC: 0.000100 @ $104831.70
+2025-05-30 22:05:52,344 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 22:08:59,922 - INFO - 127.0.0.1 - - [30/May/2025 22:08:59] "GET / HTTP/1.1" 200 -
+2025-05-30 22:08:59,995 - INFO - 127.0.0.1 - - [30/May/2025 22:08:59] "GET /funding-rates/matrix HTTP/1.1" 200 -
+2025-05-30 22:09:00,647 - INFO - 127.0.0.1 - - [30/May/2025 22:09:00] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 22:14:00,036 - INFO - 127.0.0.1 - - [30/May/2025 22:14:00] "GET /funding-rates/matrix HTTP/1.1" 200 -
+2025-05-30 22:14:00,658 - INFO - 127.0.0.1 - - [30/May/2025 22:14:00] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 22:16:07,089 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/app.py', reloading
+2025-05-30 22:16:07,102 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/app.py', reloading
+2025-05-30 22:16:07,184 - INFO -  * Restarting with stat
+2025-05-30 22:16:07,186 - INFO -  * Restarting with stat
+2025-05-30 22:16:08,426 - WARNING -  * Debugger is active!
+2025-05-30 22:16:08,425 - WARNING -  * Debugger is active!
+2025-05-30 22:16:08,465 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 22:16:08,466 - INFO -  * Debugger PIN: 943-604-095
+2025-05-30 22:16:09,144 - INFO - Updated binance BTC: 0.000100 @ $104838.90
+2025-05-30 22:16:09,144 - INFO - Updated binance BTC: 0.000100 @ $104838.90
+2025-05-30 22:16:10,674 - INFO - Updated okx BTC: 0.000100 @ $104823.70
+2025-05-30 22:16:10,805 - INFO - Updated okx BTC: 0.000100 @ $104823.70
+2025-05-30 22:16:11,713 - INFO - Updated bybit BTC: 0.000100 @ $104839.70
+2025-05-30 22:16:11,738 - INFO - Updated bybit BTC: 0.000100 @ $104839.70
+2025-05-30 22:16:12,201 - INFO - Updated bitmex BTC: 0.000036 @ $104877.36
+2025-05-30 22:16:12,267 - INFO - Updated bitmex BTC: 0.000036 @ $104877.36
+2025-05-30 22:16:13,095 - INFO - Updated kucoin BTC: 0.000370 @ $104851.73
+2025-05-30 22:16:14,825 - INFO - Updated kucoin BTC: 0.000370 @ $104851.73
+2025-05-30 22:16:17,231 - INFO - Updated gate BTC: 0.000100 @ $104839.40
+2025-05-30 22:16:19,567 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-30 22:16:26,124 - INFO - Updated gate BTC: 0.000100 @ $104839.40
+2025-05-30 22:16:26,696 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
