@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position Size Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Position Size Calculator</h1>
+
+        <div class="toggles-container">
+            <div class="form-section trade-side-selector">
+                <label class="switch-label">Long</label>
+                <label class="switch">
+                    <input type="checkbox" id="trade-side-toggle" {% if inputs.trade_side == 'short' %}checked{% endif %}>
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch-label">Short</label>
+                <input type="hidden" name="trade_side" id="trade_side_input" value="{{ inputs.trade_side or 'long' }}">
+            </div>
+
+            <!-- Calculation Type Selector -->
+            <div class="form-section calculation-type-selector">
+                <label class="switch-label">Symmetric</label>
+                <label class="switch">
+                    <input type="checkbox" id="calculation-type-toggle" {% if inputs.calculation_type == 'asymmetric' %}checked{% endif %}>
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch-label">Asymmetric</label>
+                <input type="hidden" name="calculation_type" id="calculation_type_input" value="{{ inputs.calculation_type or 'symmetric' }}">
+            </div>
+        </div>
+
+        <div class="calculator-form-container">
+            <form method="POST">
+                <!-- Phase 1 Inputs -->
+                <div class="form-section">
+                    <h2>Phase 1: Premises</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="capital_type">Capital Type</label>
+                            <select name="capital_type" id="capital_type_select">
+                                <option value="btc" {% if inputs.capital_type == 'btc' or not inputs.capital_type %}selected{% endif %}>BTC (Inverse)</option>
+                                <option value="usd" {% if inputs.capital_type == 'usd' %}selected{% endif %}>USD (Linear/Spot)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="total_capital" id="total_capital_label">Total Capital (BTC)</label>
+                            <input type="number" step="any" name="total_capital" id="total_capital_input" value="{{ inputs.total_capital or '0.26' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="risk_percentage">Risk Percentage (R)</label>
+                            <input type="number" step="any" name="risk_percentage" value="{{ inputs.risk_percentage or '2.0' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="capital_to_deploy_percentage">Capital to Deploy (%)</label>
+                            <input type="number" step="any" name="capital_to_deploy_percentage" value="{{ inputs.capital_to_deploy_percentage or '100.0' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="entry_1">Entry 1</label>
+                            <input type="number" step="any" name="entry_1" value="{{ inputs.entry_1 or '105300.00' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="entry_2">Entry 2</label>
+                            <input type="number" step="any" name="entry_2" value="{{ inputs.entry_2 or '103800.00' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="sl">Stop Loss (SL)</label>
+                            <input type="number" step="any" name="sl" value="{{ inputs.sl or '103000.00' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="tp1">Take Profit 1 (TP1)</label>
+                            <input type="number" step="any" name="tp1" value="{{ inputs.tp1 or '110000.00' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="tp5">Take Profit 5 (TP5)</label>
+                            <input type="number" step="any" name="tp5" value="{{ inputs.tp5 or '130000.00' }}">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">Calculate</button>
+            </form>
+        </div>
+
+        {% if results %}
+        <div class="results-section">
+            <h2>Phase 2: Calculations</h2>
+            <div class="results-grid-container">
+                <!-- Asymmetric Results -->
+                <div class="results-column calculation-asymmetric {{ 'hidden' if inputs.calculation_type == 'symmetric' else '' }}">
+                    <h3>Asymmetric</h3>
+                    {% if warning_asymmetric %}
+                        <div class="result-warning">
+                            <p>{{ warning_asymmetric }}</p>
+                        </div>
+                    {% endif %}
+                    <div class="result-item">
+                        <span class="result-label">Real Average Entry:</span>
+                        <span class="result-value">{{ '{:,.4f}'.format(results.asymmetric.avg_entry) }}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Distance of SL from AE (%):</span>
+                        <span class="result-value">{{ '{:,.4f}'.format(results.asymmetric.sl_distance_pct) }}%</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Risk Coefficient (k):</span>
+                        <span class="result-value">{{ '{:.8f}'.format(results.asymmetric.risk_coefficient) }}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Calculated Position Size (USD):</span>
+                        <span class="result-value">${{ '{:,.2f}'.format(results.asymmetric.position_size_usd) }}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Calculated Position Size (BTC):</span>
+                        <span class="result-value">{{ '{:.8f}'.format(results.asymmetric.position_size_btc) }}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Calculated Leverage:</span>
+                        <span class="result-value">{{ '{:.2f}'.format(results.asymmetric.leverage) }}x</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Real RR:</span>
+                        <span class="result-value">{{ '{:,.2f}'.format(results.asymmetric.real_rr) }}</span>
+                    </div>
+                </div>
+                <!-- Symmetric Results -->
+                <div class="results-column calculation-symmetric {{ 'hidden' if inputs.calculation_type == 'asymmetric' else '' }}">
+                    <h3>Symmetric</h3>
+                     {% if warning_symmetric %}
+                        <div class="result-warning">
+                            <p>{{ warning_symmetric }}</p>
+                        </div>
+                    {% endif %}
+                    <div class="result-item">
+                        <span class="result-label">Real Average Entry:</span>
+                        <span class="result-value">{{ '{:,.4f}'.format(results.symmetric.avg_entry) }}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Distance of SL from AE (%):</span>
+                        <span class="result-value">{{ '{:,.4f}'.format(results.symmetric.sl_distance_pct) }}%</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Risk Coefficient (k):</span>
+                        <span class="result-value">{{ '{:.8f}'.format(results.symmetric.risk_coefficient) }}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Calculated Position Size (USD):</span>
+                        <span class="result-value">${{ '{:,.2f}'.format(results.symmetric.position_size_usd) }}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Calculated Position Size (BTC):</span>
+                        <span class="result-value">{{ '{:.8f}'.format(results.symmetric.position_size_btc) }}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Calculated Leverage:</span>
+                        <span class="result-value">{{ '{:.2f}'.format(results.symmetric.leverage) }}x</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Real RR:</span>
+                        <span class="result-value">{{ '{:,.2f}'.format(results.symmetric.real_rr) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-section">
+            <h2>Phase 3: Entries</h2>
+            <div class="results-grid-container">
+                 <!-- Asymmetric Entries -->
+                <div class="results-column calculation-asymmetric {{ 'hidden' if inputs.calculation_type == 'symmetric' else '' }}">
+                    <h3>Asymmetric</h3>
+                    <table class="entries-table">
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>Volume (Coin)</th>
+                                <th>Volume (USD)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in results.phase3.asymmetric %}
+                            <tr>
+                                <td>{{ '{:,.2f}'.format(order.level) }}</td>
+                                <td>{{ '{:,.8f}'.format(order.volume_coin) }}</td>
+                                <td>${{ '{:,.2f}'.format(order.volume_usd) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                         <tfoot>
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td><strong>{{ '{:,.8f}'.format(results.phase3.asymmetric | sum(attribute='volume_coin')) }}</strong></td>
+                                <td><strong>${{ '{:,.2f}'.format(results.asymmetric.position_size_usd) }}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- Symmetric Entries -->
+                <div class="results-column calculation-symmetric {{ 'hidden' if inputs.calculation_type == 'asymmetric' else '' }}">
+                    <h3>Symmetric</h3>
+                    <table class="entries-table">
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>Volume (Coin)</th>
+                                <th>Volume (USD)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in results.phase3.symmetric %}
+                            <tr>
+                                <td>{{ '{:,.2f}'.format(order.level) }}</td>
+                                <td>{{ '{:,.8f}'.format(order.volume_coin) }}</td>
+                                <td>${{ '{:,.2f}'.format(order.volume_usd) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td><strong>{{ '{:,.8f}'.format(results.phase3.symmetric | sum(attribute='volume_coin')) }}</strong></td>
+                                <td><strong>${{ '{:,.2f}'.format(results.symmetric.position_size_usd) }}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        {% if inputs.capital_type == 'btc' %}
+        <div class="results-section">
+            <h2>Phase 4: Rounded Entries</h2>
+             <div class="results-grid-container">
+                <!-- Asymmetric Rounded Entries -->
+                <div class="results-column calculation-asymmetric {{ 'hidden' if inputs.calculation_type == 'symmetric' else '' }}">
+                    <h3>Asymmetric</h3>
+                    <table class="entries-table">
+                        <thead>
+                            <tr>
+                                <th>Levels</th>
+                                <th>Coin volume in BTC</th>
+                                <th>Coin volume in USD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in results.phase4.asymmetric %}
+                            <tr>
+                                <td>{{ '{:,.2f}'.format(order.level) }}</td>
+                                <td>{{ '{:,.8f}'.format(order.volume_coin) }}</td>
+                                <td>${{ '{:,.2f}'.format(order.volume_usd) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td><strong>{{ '{:,.8f}'.format(results.phase4.asymmetric | sum(attribute='volume_coin')) }}</strong></td>
+                                <td><strong>${{ '{:,.2f}'.format(results.phase4.asymmetric | sum(attribute='volume_usd')) }}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- Symmetric Rounded Entries -->
+                <div class="results-column calculation-symmetric {{ 'hidden' if inputs.calculation_type == 'asymmetric' else '' }}">
+                    <h3>Symmetric</h3>
+                    <table class="entries-table">
+                        <thead>
+                            <tr>
+                                <th>Levels</th>
+                                <th>Coin volume in BTC</th>
+                                <th>Coin volume in USD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in results.phase4.symmetric %}
+                            <tr>
+                                <td>{{ '{:,.2f}'.format(order.level) }}</td>
+                                <td>{{ '{:,.8f}'.format(order.volume_coin) }}</td>
+                                <td>${{ '{:,.2f}'.format(order.volume_usd) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td><strong>{{ '{:,.8f}'.format(results.phase4.symmetric | sum(attribute='volume_coin')) }}</strong></td>
+                                <td><strong>${{ '{:,.2f}'.format(results.phase4.symmetric | sum(attribute='volume_usd')) }}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="results-section">
+            <h2>Phase 5: Exits</h2>
+             <div class="results-grid-container">
+                <!-- Asymmetric Exits -->
+                <div class="results-column calculation-asymmetric {{ 'hidden' if inputs.calculation_type == 'symmetric' else '' }}">
+                    <h3>Asymmetric</h3>
+                    <table class="entries-table">
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>Volume (Coin)</th>
+                                <th>Volume (USD)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in results.phase5.asymmetric %}
+                            <tr>
+                                <td>{{ '{:,.2f}'.format(order.level) }}</td>
+                                <td>{{ '{:,.8f}'.format(order.volume_coin) }}</td>
+                                <td>${{ '{:,.2f}'.format(order.volume_usd) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td><strong>{{ '{:,.8f}'.format(results.phase5.asymmetric | sum(attribute='volume_coin')) }}</strong></td>
+                                <td><strong>${{ '{:,.2f}'.format(results.phase5.asymmetric | sum(attribute='volume_usd')) }}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- Symmetric Exits -->
+                <div class="results-column calculation-symmetric {{ 'hidden' if inputs.calculation_type == 'asymmetric' else '' }}">
+                    <h3>Symmetric</h3>
+                    <table class="entries-table">
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>Volume (Coin)</th>
+                                <th>Volume (USD)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in results.phase5.symmetric %}
+                            <tr>
+                                <td>{{ '{:,.2f}'.format(order.level) }}</td>
+                                <td>{{ '{:,.8f}'.format(order.volume_coin) }}</td>
+                                <td>${{ '{:,.2f}'.format(order.volume_usd) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                         <tfoot>
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td><strong>{{ '{:,.8f}'.format(results.phase5.symmetric | sum(attribute='volume_coin')) }}</strong></td>
+                                <td><strong>${{ '{:,.2f}'.format(results.phase5.symmetric | sum(attribute='volume_usd')) }}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {% if inputs.capital_type == 'btc' %}
+        <div class="results-section">
+            <h2>Phase 6: Rounded Exits</h2>
+            <div class="results-grid-container">
+                <!-- Asymmetric Exits -->
+                <div class="results-column calculation-asymmetric {{ 'hidden' if inputs.calculation_type == 'symmetric' else '' }}">
+                    <h3>Asymmetric</h3>
+                    <table class="entries-table">
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>Volume (Coin)</th>
+                                <th>Volume (USD)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in results.phase6.asymmetric %}
+                            <tr>
+                                <td>{{ '{:,.2f}'.format(order.level) }}</td>
+                                <td>{{ '{:,.8f}'.format(order.volume_coin) }}</td>
+                                <td>${{ '{:,.2f}'.format(order.volume_usd) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td><strong>{{ '{:,.8f}'.format(results.phase6.asymmetric | sum(attribute='volume_coin')) }}</strong></td>
+                                <td><strong>${{ '{:,.2f}'.format(results.phase6.asymmetric | sum(attribute='volume_usd')) }}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- Symmetric Exits -->
+                <div class="results-column calculation-symmetric {{ 'hidden' if inputs.calculation_type == 'asymmetric' else '' }}">
+                    <h3>Symmetric</h3>
+                    <table class="entries-table">
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>Volume (Coin)</th>
+                                <th>Volume (USD)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in results.phase6.symmetric %}
+                            <tr>
+                                <td>{{ '{:,.2f}'.format(order.level) }}</td>
+                                <td>{{ '{:,.8f}'.format(order.volume_coin) }}</td>
+                                <td>${{ '{:,.2f}'.format(order.volume_usd) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td><strong>{{ '{:,.8f}'.format(results.phase6.symmetric | sum(attribute='volume_coin')) }}</strong></td>
+                                <td><strong>${{ '{:,.2f}'.format(results.phase6.symmetric | sum(attribute='volume_usd')) }}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% endif %}
+
+    </div>
+
+    <script>
+        document.getElementById('trade-side-toggle').addEventListener('change', function() {
+            document.getElementById('trade_side_input').value = this.checked ? 'short' : 'long';
+        });
+
+        document.getElementById('calculation-type-toggle').addEventListener('change', function() {
+            const isAsymmetric = this.checked;
+            document.getElementById('calculation_type_input').value = isAsymmetric ? 'asymmetric' : 'symmetric';
+
+            // Toggle visibility of result columns without form submission
+            const asymmetricElements = document.querySelectorAll('.calculation-asymmetric');
+            const symmetricElements = document.querySelectorAll('.calculation-symmetric');
+
+            if (isAsymmetric) {
+                asymmetricElements.forEach(el => el.classList.remove('hidden'));
+                symmetricElements.forEach(el => el.classList.add('hidden'));
+            } else {
+                asymmetricElements.forEach(el => el.classList.add('hidden'));
+                symmetricElements.forEach(el => el.classList.remove('hidden'));
+            }
+        });
+
+        document.getElementById('capital_type_select').addEventListener('change', function() {
+            const label = document.getElementById('total_capital_label');
+            if (this.value === 'btc') {
+                label.textContent = 'Total Capital (BTC)';
+            } else {
+                label.textContent = 'Total Capital (USD)';
+            }
+        });
+
+        // Trigger change on page load to set initial state
+        document.getElementById('capital_type_select').dispatchEvent(new Event('change'));
+    </script>
+</body>
+</html> 

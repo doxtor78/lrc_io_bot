@@ -1,0 +1,37 @@
+BTC Funding Rates Dashboard - Project Status (as of latest stable version)
+=======================================================================
+
+**Current State:**
+- The project is a BTC funding rates dashboard with a modern web UI (Coinglass-style), price chart, and matrix tables for USDT and Token-margined exchanges.
+- Data is fetched from: binance, okx, bybit, bitmex, kucoin, gate, dydx.
+- All funding rates and prices are saved in the SQLite database (`funding_rates.db`).
+- The web dashboard is responsive, shows exchange icons, and displays rates as percentages.
+- Two stable snapshots are saved: `stable_versions/stable_v1` (first version) and `stable_versions/stable_v2` (latest, full project snapshot).
+- The project is now tracked by git, with a `v2.0.0` tag for the current stable version.
+- Virtual environment (`venv`) is set up and should always be activated before running anything.
+
+**How to Start Next Time:**
+1. Open a terminal and activate your venv:
+   source venv/bin/activate
+2. Run the app:
+   python app.py
+3. Visit http://127.0.0.1:5003 in your browser.
+
+**What's Working:**
+- Funding rates and prices are fetched and saved for all listed exchanges.
+- Data is exported to CSV (`funding_rates_export.csv`) if needed.
+- The dashboard UI is modern and matches Coinglass style.
+- Project history is tracked in git.
+
+**Next Steps / TODO:**
+- Add more analytics or historical charts if desired.
+- Add more exchanges if APIs become available.
+- Optionally, push the git repo to GitHub for remote backup.
+- Review or update the README for onboarding.
+
+**Brief Summary for User:**
+- Your BTC funding rates dashboard is fully working, modern, and stable.
+- All code, data, and UI are saved in `stable_versions/stable_v2`.
+- Always activate your venv before running anything.
+- You can view, export, and analyze your data as needed.
+- See this file for a quick project recap next time! 

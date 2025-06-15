@@ -1,0 +1,16 @@
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# IDE/OS files
+.DS_Store
+.idea/
+
+# Log files
+*.log
+
+# Database files
+*.db 

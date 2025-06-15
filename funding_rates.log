@@ -369,3 +369,111 @@
 2025-05-30 22:16:26,696 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
 2025-05-30 22:19:00,047 - INFO - 127.0.0.1 - - [30/May/2025 22:19:00] "GET /funding-rates/matrix HTTP/1.1" 200 -
 2025-05-30 22:19:00,622 - INFO - 127.0.0.1 - - [30/May/2025 22:19:00] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 22:24:00,050 - INFO - 127.0.0.1 - - [30/May/2025 22:24:00] "GET /funding-rates/matrix HTTP/1.1" 200 -
+2025-05-30 22:24:01,109 - INFO - 127.0.0.1 - - [30/May/2025 22:24:01] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 22:29:00,072 - INFO - 127.0.0.1 - - [30/May/2025 22:29:00] "GET /funding-rates/matrix HTTP/1.1" 200 -
+2025-05-30 22:29:00,667 - INFO - 127.0.0.1 - - [30/May/2025 22:29:00] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 22:34:00,065 - INFO - 127.0.0.1 - - [30/May/2025 22:34:00] "GET /funding-rates/matrix HTTP/1.1" 200 -
+2025-05-30 22:34:00,579 - INFO - 127.0.0.1 - - [30/May/2025 22:34:00] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 22:39:00,061 - INFO - 127.0.0.1 - - [30/May/2025 22:39:00] "GET /funding-rates/matrix HTTP/1.1" 200 -
+2025-05-30 22:39:00,699 - INFO - 127.0.0.1 - - [30/May/2025 22:39:00] "GET /historical-data HTTP/1.1" 200 -
+2025-05-30 22:44:12,663 - INFO - 127.0.0.1 - - [30/May/2025 22:44:12] "GET /funding-rates/matrix HTTP/1.1" 200 -
+2025-05-30 22:44:12,879 - INFO - 127.0.0.1 - - [30/May/2025 22:44:12] "GET /historical-data HTTP/1.1" 200 -
+2025-05-31 07:54:44,868 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5003
+2025-05-31 07:54:44,869 - INFO - [33mPress CTRL+C to quit[0m
+2025-05-31 07:54:44,870 - INFO -  * Restarting with stat
+2025-05-31 07:54:45,305 - WARNING -  * Debugger is active!
+2025-05-31 07:54:45,365 - INFO -  * Debugger PIN: 890-956-514
+2025-05-31 07:54:45,403 - INFO - Updated binance BTC: 0.000100 @ $103701.65
+2025-05-31 07:54:45,874 - INFO - Updated binance BTC: 0.000100 @ $103701.65
+2025-05-31 07:54:46,287 - INFO - Updated okx BTC: 0.000100 @ $103696.90
+2025-05-31 07:54:46,680 - INFO - Updated okx BTC: 0.000100 @ $103696.90
+2025-05-31 07:54:47,082 - INFO - Updated bybit BTC: 0.000100 @ $103711.50
+2025-05-31 07:54:47,457 - INFO - Updated bybit BTC: 0.000100 @ $103711.50
+2025-05-31 07:54:49,477 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-31 07:54:49,772 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-31 07:54:50,565 - INFO - Updated kucoin BTC: 0.000104 @ $103744.66
+2025-05-31 07:54:51,593 - INFO - Updated kucoin BTC: 0.000104 @ $103744.66
+2025-05-31 07:54:53,781 - INFO - Updated gate BTC: 0.000100 @ $103696.51
+2025-05-31 07:54:54,498 - INFO - Updated gate BTC: 0.000100 @ $103696.51
+2025-05-31 07:54:55,116 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-31 07:54:55,473 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-05-31 10:19:29,693 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/btc_funding_collector/funding_rates.py', reloading
+2025-05-31 10:19:29,760 - INFO -  * Restarting with stat
+2025-05-31 10:19:30,182 - WARNING -  * Debugger is active!
+2025-05-31 10:19:30,214 - INFO -  * Debugger PIN: 890-956-514
+2025-05-31 10:19:30,711 - INFO - Updated binance BTC: 0.000086 @ $103630.90
+2025-05-31 10:19:31,493 - INFO - Updated okx BTC: 0.000100 @ $103641.60
+2025-05-31 10:19:32,412 - INFO - Updated bybit BTC: 0.000100 @ $103625.60
+2025-05-31 10:19:34,846 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-05-31 10:19:35,672 - INFO - Updated kucoin BTC: 0.000104 @ $103676.75
+2025-05-31 10:19:38,516 - INFO - Updated gate BTC: 0.000100 @ $103635.00
+2025-05-31 10:19:39,057 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-01 16:00:01,777 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5003
+2025-06-01 16:00:01,778 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-01 16:00:01,779 - INFO -  * Restarting with stat
+2025-06-01 16:00:02,151 - WARNING -  * Debugger is active!
+2025-06-01 16:00:02,160 - INFO -  * Debugger PIN: 559-676-056
+2025-06-01 16:00:02,217 - INFO - Updated binance BTC: 0.000029 @ $103917.10
+2025-06-01 16:00:02,582 - INFO - Updated binance BTC: 0.000029 @ $103917.20
+2025-06-01 16:00:03,120 - INFO - Updated okx BTC: 0.000067 @ $103917.10
+2025-06-01 16:00:03,485 - INFO - Updated okx BTC: 0.000067 @ $103917.00
+2025-06-01 16:00:04,078 - INFO - Updated bybit BTC: 0.000094 @ $103912.80
+2025-06-01 16:00:04,302 - INFO - Updated bybit BTC: 0.000094 @ $103912.80
+2025-06-01 16:00:07,053 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-01 16:00:07,106 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-01 16:00:08,149 - INFO - Updated kucoin BTC: 0.000071 @ $103957.77
+2025-06-01 16:00:08,150 - INFO - Updated kucoin BTC: 0.000071 @ $103957.21
+2025-06-01 16:00:11,058 - INFO - Updated gate BTC: 0.000100 @ $103924.68
+2025-06-01 16:00:11,192 - INFO - Updated gate BTC: 0.000100 @ $103924.68
+2025-06-01 16:00:12,437 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-01 16:00:12,453 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-01 17:47:46,481 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/main.py', reloading
+2025-06-01 17:47:46,563 - INFO -  * Restarting with stat
+2025-06-01 17:47:47,215 - WARNING -  * Debugger is active!
+2025-06-01 17:47:47,226 - INFO -  * Debugger PIN: 559-676-056
+2025-06-01 17:47:47,700 - INFO - Updated binance BTC: 0.000049 @ $104584.62
+2025-06-01 17:47:48,299 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/main.py', reloading
+2025-06-01 17:47:48,365 - INFO -  * Restarting with stat
+2025-06-01 17:47:48,735 - WARNING -  * Debugger is active!
+2025-06-01 17:47:48,745 - INFO -  * Debugger PIN: 559-676-056
+2025-06-01 17:47:49,204 - INFO - Updated binance BTC: 0.000049 @ $104584.63
+2025-06-01 17:47:50,060 - INFO - Updated okx BTC: 0.000041 @ $104572.50
+2025-06-01 17:47:50,992 - INFO - Updated bybit BTC: 0.000094 @ $104580.00
+2025-06-01 17:47:53,490 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-01 17:47:58,125 - INFO - Updated kucoin BTC: 0.000071 @ $104636.33
+2025-06-01 17:48:00,784 - INFO - Updated gate BTC: 0.000100 @ $104562.90
+2025-06-01 17:48:01,426 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-01 17:49:16,236 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/main.py', reloading
+2025-06-01 17:49:16,300 - INFO -  * Restarting with stat
+2025-06-01 17:49:16,768 - WARNING -  * Debugger is active!
+2025-06-01 17:49:16,776 - INFO -  * Debugger PIN: 559-676-056
+2025-06-01 17:49:17,228 - INFO - Updated binance BTC: 0.000049 @ $104614.81
+2025-06-01 17:49:18,082 - INFO - Updated okx BTC: 0.000041 @ $104609.30
+2025-06-01 17:49:19,220 - INFO - Updated bybit BTC: 0.000094 @ $104624.30
+2025-06-01 17:49:21,837 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-01 17:49:23,360 - INFO - Updated kucoin BTC: 0.000071 @ $104666.17
+2025-06-01 17:49:26,155 - INFO - Updated gate BTC: 0.000100 @ $104618.80
+2025-06-01 17:49:26,644 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-01 17:50:41,136 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/main.py', reloading
+2025-06-01 17:50:41,194 - INFO -  * Restarting with stat
+2025-06-01 17:50:41,681 - WARNING -  * Debugger is active!
+2025-06-01 17:50:41,699 - INFO -  * Debugger PIN: 559-676-056
+2025-06-01 17:50:42,146 - INFO - Updated binance BTC: 0.000049 @ $104577.10
+2025-06-01 17:50:42,985 - INFO - Updated okx BTC: 0.000040 @ $104573.10
+2025-06-01 17:50:43,912 - INFO - Updated bybit BTC: 0.000094 @ $104580.90
+2025-06-01 17:50:44,990 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/main.py', reloading
+2025-06-01 17:50:45,048 - INFO -  * Restarting with stat
+2025-06-01 17:50:45,459 - WARNING -  * Debugger is active!
+2025-06-01 17:50:45,472 - INFO -  * Debugger PIN: 559-676-056
+2025-06-01 17:50:45,876 - INFO - Updated binance BTC: 0.000049 @ $104571.32
+2025-06-01 17:50:46,743 - INFO - Updated okx BTC: 0.000040 @ $104569.20
+2025-06-01 17:50:47,508 - INFO - Updated bybit BTC: 0.000094 @ $104581.00
+2025-06-01 17:50:49,978 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-01 17:50:50,696 - INFO - Updated kucoin BTC: 0.000071 @ $104627.69
+2025-06-01 17:50:53,490 - INFO - Updated gate BTC: 0.000100 @ $104565.14
+2025-06-01 17:50:53,983 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-01 21:30:52,586 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/app.py', reloading
+2025-06-01 21:30:52,685 - INFO -  * Restarting with stat

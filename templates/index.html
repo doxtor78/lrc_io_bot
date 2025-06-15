@@ -3,232 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BTC Funding Rates Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
-    <style>
-        body {
-            font-family: 'Inter', Arial, sans-serif;
-            background: #f7f8fa;
-            margin: 0;
-            padding: 0;
-        }
-        .chart-section {
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            padding: 24px 20px 20px 20px;
-            max-width: 900px;
-            margin: 40px auto 24px auto;
-        }
-        .dashboard-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 24px;
-            margin: 0 auto 40px auto;
-            max-width: 1200px;
-        }
-        .matrix-section {
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-            padding: 24px 20px 20px 20px;
-            min-width: 320px;
-            flex: 1 1 420px;
-            margin-bottom: 24px;
-            border: 1.5px solid #e5e7eb;
-        }
-        .matrix-section.token-margined {
-            min-width: 220px;
-            max-width: 260px;
-        }
-        .matrix-title {
-            font-size: 1.25em;
-            font-weight: bold;
-            margin-bottom: 18px;
-            text-align: left;
-            letter-spacing: 0.01em;
-        }
-        .matrix-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-bottom: 10px;
-            background: #fff;
-        }
-        .matrix-table th, .matrix-table td {
-            padding: 10px 8px;
-            text-align: center;
-            font-size: 1.08em;
-        }
-        .matrix-table th {
-            background: #f0f2f5;
-            font-weight: 700;
-            border-bottom: 2px solid #e0e0e0;
-            position: relative;
-        }
-        .matrix-table th .exchange-icon {
-            display: block;
-            margin: 0 auto 4px auto;
-            width: 24px;
-            height: 24px;
-        }
-        .matrix-table tr {
-            transition: background 0.15s;
-        }
-        .matrix-table tr:hover {
-            background: #f7fafc;
-        }
-        .matrix-table td {
-            background: #fff;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 1.08em;
-        }
-        .rate-pos { color: #16a34a; font-weight: bold; }
-        .rate-neg { color: #e11d48; font-weight: bold; }
-        .btc-icon {
-            font-size: 1.3em;
-            vertical-align: middle;
-            margin-right: 6px;
-        }
-        .predicted-row td {
-            color: #888;
-            font-style: italic;
-            background: #f8fafc;
-        }
-        @media (max-width: 900px) {
-            .dashboard-container { flex-direction: column; align-items: center; }
-            .chart-section { margin: 24px 8px; }
-            .matrix-section.token-margined { max-width: 100%; min-width: 220px; }
-        }
-    </style>
+    <title>My Crypto Portfolio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v='1.1') }}">
+    <meta http-equiv="refresh" content="300">
 </head>
 <body>
-    <h1 style="text-align:center; margin-top:32px;">BTC Funding Rates Matrix</h1>
-    <div class="chart-section">
-        <div style="font-size:1.1em; font-weight:600; margin-bottom:10px;">BitMEX XBTUSD Price Chart</div>
-        <div id="chart" style="width:100%; height:400px;"></div>
-        <div id="chart-status" style="color:#888; font-size:0.95em; margin-top:8px;">Loading chart data...</div>
-    </div>
-    <div class="dashboard-container" id="dashboard-container">
-        <!-- Tables will be injected here -->
+    <div class="container">
+        <h1>My Crypto Portfolio</h1>
+        <div class="total-value-box">
+            <h2>Total Portfolio Value</h2>
+            <p>${{ '{:,.2f}'.format(total_value) }}</p>
+        </div>
+
+        <div class="controls">
+            <label class="switch">
+                <input type="checkbox" id="show-small-balances">
+                <span class="slider round"></span>
+            </label>
+            <span>Show Balances &lt; $10.00</span>
+        </div>
+
+        <div class="exchange-card">
+            <h2>Portfolio Overview</h2>
+            {{ portfolio_html | safe }}
+        </div>
+
+        {% for exchange, data in exchanges_data.items() %}
+            <div class="exchange-card">
+                <div class="exchange-header">
+                    <h2>{{ exchange }}</h2>
+                    <span class="exchange-total">${{ '{:,.2f}'.format(data.total_value) }}</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Asset</th>
+                            <th>Amount</th>
+                            <th>Price (USD)</th>
+                            <th>Value (USD)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for asset in data.assets %}
+                            <tr data-value="{{ asset.value }}">
+                                <td>{{ asset.original_asset }}</td>
+                                <td>{{ '{:,.8f}'.format(asset.amount) }}</td>
+                                <td>${{ '{:,.4f}'.format(asset.price) }}</td>
+                                <td>${{ '{:,.2f}'.format(asset.value) }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
     </div>
     <script>
-    // Exchange icons (SVG/emoji fallback)
-    const EXCHANGE_ICONS = {
-        binance: '<img class="exchange-icon" src="https://cryptologos.cc/logos/binance-coin-bnb-logo.svg?v=026" alt="Binance" title="Binance" />',
-        okx: '<img class="exchange-icon" src="https://cryptologos.cc/logos/okb-okb-logo.svg?v=026" alt="OKX" title="OKX" />',
-        bybit: '<img class="exchange-icon" src="https://cryptologos.cc/logos/bybit-bybit-logo.svg?v=026" alt="Bybit" title="Bybit" />',
-        bitmex: '<img class="exchange-icon" src="https://cryptologos.cc/logos/bitmex-bmex-logo.svg?v=026" alt="BitMEX" title="BitMEX" />',
-        kucoin: '<img class="exchange-icon" src="https://cryptologos.cc/logos/kucoin-kucoin-logo.svg?v=026" alt="KuCoin" title="KuCoin" />',
-        gate: '<img class="exchange-icon" src="https://cryptologos.cc/logos/gate-io-gate-io-logo.svg?v=026" alt="Gate.io" title="Gate.io" />',
-        dydx: '<span class="exchange-icon" title="dYdX" style="font-size:1.3em;">🦉</span>',
-    };
-    // Chart logic
-    async function fetchChartData() {
-        const res = await fetch('/historical-data');
-        return await res.json();
-    }
-    async function renderChart() {
-        const chartContainer = document.getElementById('chart');
-        const chartStatus = document.getElementById('chart-status');
-        chartContainer.innerHTML = '';
-        chartStatus.textContent = 'Loading chart data...';
-        try {
-            const data = await fetchChartData();
-            if (!Array.isArray(data) || data.length === 0) {
-                chartStatus.textContent = 'No chart data available.';
-                return;
-            }
-            const chart = LightweightCharts.createChart(chartContainer, {
-                width: chartContainer.offsetWidth,
-                height: 400,
-                layout: { background: { color: '#fff' }, textColor: '#222' },
-                grid: { vertLines: { color: '#eee' }, horzLines: { color: '#eee' } },
-                timeScale: { timeVisible: true, secondsVisible: false },
-            });
-            const candleSeries = chart.addCandlestickSeries();
-            candleSeries.setData(data.map(bar => ({
-                time: bar.time,
-                open: bar.open,
-                high: bar.high,
-                low: bar.low,
-                close: bar.close
-            })));
-            chartStatus.textContent = 'Loaded ' + data.length + ' candles.';
-            window.addEventListener('resize', () => {
-                chart.applyOptions({ width: chartContainer.offsetWidth });
-            });
-        } catch (e) {
-            chartStatus.textContent = 'Error loading chart data.';
-        }
-    }
-    renderChart();
-    setInterval(renderChart, 5 * 60 * 1000);
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('show-small-balances');
 
-    // Matrix logic
-    async function fetchMatrix() {
-        const res = await fetch('/funding-rates/matrix');
-        return await res.json();
-    }
-    function formatRate(rate) {
-        if (typeof rate !== 'number') return '-';
-        return (rate * 100).toFixed(4) + '%';
-    }
-    function createMatrixTable(marginType, data) {
-        // Only show exchanges that actually have data
-        const exchanges = Object.keys(data).filter(ex => data[ex] && typeof data[ex].rate === 'number');
-        let sectionClass = 'matrix-section';
-        if (marginType.toLowerCase().includes('token')) sectionClass += ' token-margined';
-        let html = `<div class="${sectionClass}">
-            <div class="matrix-title">${marginType}</div>
-            <table class="matrix-table">
-                <thead><tr><th>Symbol</th>`;
-        exchanges.forEach(ex => {
-            html += `<th title="${ex.charAt(0).toUpperCase() + ex.slice(1)}">${EXCHANGE_ICONS[ex] || ''}<span>${ex.charAt(0).toUpperCase() + ex.slice(1)}</span></th>`;
-        });
-        html += `</tr></thead><tbody>`;
-        // BTC row
-        html += `<tr><td><span class="btc-icon" title="BTC">₿</span>BTC</td>`;
-        exchanges.forEach(ex => {
-            const rate = data[ex]?.rate;
-            let rateClass = '';
-            if (typeof rate === 'number') {
-                rateClass = rate >= 0 ? 'rate-pos' : 'rate-neg';
-                html += `<td class="${rateClass}">${formatRate(rate)}</td>`;
-            } else {
-                html += `<td>-</td>`;
+            function filterRows() {
+                const showSmall = toggle.checked;
+                document.querySelectorAll('tbody tr').forEach(row => {
+                    const value = parseFloat(row.dataset.value);
+                    if (!showSmall && value < 10.0) {
+                        row.classList.add('hidden-row');
+                    } else {
+                        row.classList.remove('hidden-row');
+                    }
+                });
             }
+
+            toggle.addEventListener('change', filterRows);
+            // Initial filter on page load
+            filterRows();
         });
-        html += `</tr>`;
-        // Predicted row
-        html += `<tr class="predicted-row"><td>Predicted</td>`;
-        exchanges.forEach(() => {
-            html += `<td>-</td>`;
-        });
-        html += `</tr>`;
-        html += `</tbody></table></div>`;
-        return html;
-    }
-    async function renderDashboard() {
-        const container = document.getElementById('dashboard-container');
-        container.innerHTML = '<div>Loading...</div>';
-        const matrix = await fetchMatrix();
-        container.innerHTML = '';
-        if (matrix['USDT Margined']) {
-            container.innerHTML += createMatrixTable('USDT Margined', matrix['USDT Margined']);
-        }
-        if (matrix['Token Margined']) {
-            container.innerHTML += createMatrixTable('Token Margined', matrix['Token Margined']);
-        }
-        Object.keys(matrix).forEach(type => {
-            if (type !== 'USDT Margined' && type !== 'Token Margined') {
-                container.innerHTML += createMatrixTable(type, matrix[type]);
-            }
-        });
-    }
-    renderDashboard();
-    setInterval(renderDashboard, 5 * 60 * 1000);
     </script>
 </body>
 </html>
