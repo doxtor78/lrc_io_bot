@@ -132,7 +132,8 @@
                     priceLineVisible: false,
                     lastValueVisible: false,
                     crosshairMarkerVisible: false,
-                    lineVisible: false,
+                    lineWidth: 0,
+                    lineVisible: false
                 });
                 series.setData(data);
                 lrcLineSeries.push(series);
@@ -140,20 +141,20 @@
             
             const backgroundColor = '#ffffff';
 
-            const upper2Data = createLineData(2);
+            const upper4Data = createLineData(4);
             const upper1Data = createLineData(1);
             const lower1Data = createLineData(-1);
-            const lower2Data = createLineData(-2);
+            const lower4Data = createLineData(-4);
             
             // Draw from top to bottom to ensure correct layering
-            createAreaFill(upper2Data, 'rgba(239, 83, 80, 0.2)');
+            createAreaFill(upper4Data, 'rgba(239, 83, 80, 0.2)');
             createAreaFill(upper1Data, backgroundColor);
 
             createAreaFill(upper1Data, 'rgba(120, 120, 120, 0.1)');
             createAreaFill(lower1Data, backgroundColor);
 
             createAreaFill(lower1Data, 'rgba(38, 166, 154, 0.2)');
-            createAreaFill(lower2Data, backgroundColor);
+            createAreaFill(lower4Data, backgroundColor);
         }
 
         function drawLRCLines(lrcData) {
