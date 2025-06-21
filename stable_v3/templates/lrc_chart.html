@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LRC Chart Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background: #f4f7f9; margin: 0; padding: 2em; display: flex; flex-direction: column; align-items: center; }
+        .container { background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 2em; width: 100%; max-width: 900px; }
+        h1 { margin-top: 0; }
+        .form-group { display: flex; gap: 1em; align-items: center; margin-bottom: 1.5em; flex-wrap: wrap; }
+        .form-group label { font-weight: 500; }
+        .form-group input { padding: 0.5em; border-radius: 4px; border: 1px solid #ccc; }
+        .form-group button { padding: 0.6em 1.2em; border: none; background: #007aff; color: white; border-radius: 4px; font-size: 1em; cursor: pointer; transition: background 0.2s; }
+        .form-group button:hover { background: #0056b3; }
+        #chart { width: 100%; height: 500px; margin-top: 1em; }
+        #chart-status { margin-top: 1em; color: #555; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LRC Chart Generator</h1>
+        <p>Select a start date and time to draw the Linear Regression Channel for BTC/USDT (1h timeframe).</p>
+        <div class="form-group">
+            <label>Start Date:</label>
+            <input type="number" id="lrc-start-year" value="2024" style="width: 70px;">
+            <label>Month:</label>
+            <input type="number" id="lrc-start-month" value="6" min="1" max="12" style="width: 50px;">
+            <label>Day:</label>
+            <input type="number" id="lrc-start-day" value="10" min="1" max="31" style="width: 50px;">
+            <label>Hour:</label>
+            <input type="number" id="lrc-start-hour" value="21" min="0" max="23" style="width: 50px;">
+            <label>Minute:</label>
+            <input type="number" id="lrc-start-minute" value="0" min="0" max="59" style="width: 50px;">
+            <label>Second:</label>
+            <input type="number" id="lrc-start-second" value="0" min="0" max="59" style="width: 50px;">
+            <button id="generate-chart-btn">Generate Chart</button>
+        </div>
+        <div id="chart"></div>
+        <div id="chart-status">Enter a date and click "Generate Chart".</div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chartElement = document.getElementById('chart');
+        const chartStatus = document.getElementById('chart-status');
+
+        const chart = LightweightCharts.createChart(chartElement, {
+            width: chartElement.clientWidth,
+            height: 500,
+            layout: { background: { type: 'solid', color: '#ffffff' }, textColor: '#333' },
+            grid: { vertLines: { color: '#f0f0f0' }, horzLines: { color: '#f0f0f0' } },
+            timeScale: { timeVisible: true, secondsVisible: false }
+        });
+
+        let candleSeries = null;
+        let lrcLineSeries = [];
+
+        async function fetchAndDrawChart() {
+            chartStatus.textContent = 'Loading data...';
+
+            // --- Clear all previous series to ensure correct layering ---
+            lrcLineSeries.forEach(series => chart.removeSeries(series));
+            lrcLineSeries = [];
+            if (candleSeries) {
+                chart.removeSeries(candleSeries);
+                candleSeries = null;
+            }
+
+            const year = document.getElementById('lrc-start-year').value;
+            const month = document.getElementById('lrc-start-month').value;
+            const day = document.getElementById('lrc-start-day').value;
+            const hour = document.getElementById('lrc-start-hour').value;
+            const minute = document.getElementById('lrc-start-minute').value;
+            const second = document.getElementById('lrc-start-second').value;
+            const startDate = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+            const startTimestamp = Math.floor(startDate.getTime() / 1000);
+            
+            const url = `/api/lrc-data?binSize=1h&useDateRange=true&startTimestamp=${startTimestamp}&deviations=1,2,3,4`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.error) throw new Error(data.error);
+
+                // --- Draw chart elements in the correct order ---
+                
+                // 1. Draw background zones first
+                if (data.lrc && data.lrc.params) {
+                    drawLRCZones(data.lrc);
+                }
+
+                // 2. Draw candles on top of zones
+                candleSeries = chart.addCandlestickSeries({
+                    upColor: 'rgba(38, 166, 154, 1)',
+                    downColor: 'rgba(239, 83, 80, 1)',
+                    borderDownColor: 'rgba(239, 83, 80, 1)',
+                    borderUpColor: 'rgba(38, 166, 154, 1)',
+                    wickDownColor: 'rgba(239, 83, 80, 1)',
+                    wickUpColor: 'rgba(38, 166, 154, 1)',
+                });
+                candleSeries.setData(data.candles);
+                
+                // 3. Draw lines on top of candles
+                if (data.lrc && data.lrc.params) {
+                    drawLRCLines(data.lrc);
+                }
+
+                chart.timeScale().fitContent();
+                chartStatus.textContent = 'Chart generated successfully. Last updated: ' + new Date().toLocaleTimeString();
+            } catch (error) {
+                console.error('Failed to fetch chart data:', error);
+                chartStatus.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        function drawLRCZones(lrcData) {
+            const params = lrcData.params;
+            const stdDev = params.std_dev;
+
+            const createLineData = (level) => [
+                { time: params.start_time, value: params.start_price + level * stdDev },
+                { time: params.end_time, value: params.end_price + level * stdDev }
+            ];
+
+            const createAreaFill = (data, color) => {
+                const series = chart.addAreaSeries({
+                    topColor: color,
+                    bottomColor: color,
+                    priceLineVisible: false,
+                    lastValueVisible: false,
+                    crosshairMarkerVisible: false,
+                    lineVisible: false,
+                });
+                series.setData(data);
+                lrcLineSeries.push(series);
+            };
+            
+            const backgroundColor = '#ffffff';
+
+            const upper2Data = createLineData(2);
+            const upper1Data = createLineData(1);
+            const lower1Data = createLineData(-1);
+            const lower2Data = createLineData(-2);
+            
+            // Draw from top to bottom to ensure correct layering
+            createAreaFill(upper2Data, 'rgba(239, 83, 80, 0.2)');
+            createAreaFill(upper1Data, backgroundColor);
+
+            createAreaFill(upper1Data, 'rgba(120, 120, 120, 0.1)');
+            createAreaFill(lower1Data, backgroundColor);
+
+            createAreaFill(lower1Data, 'rgba(38, 166, 154, 0.2)');
+            createAreaFill(lower2Data, backgroundColor);
+        }
+
+        function drawLRCLines(lrcData) {
+            const params = lrcData.params;
+            const deviations = lrcData.deviations;
+            const stdDev = params.std_dev;
+
+            // --- Draw Baseline ---
+            const baselineSeries = chart.addLineSeries({
+                color: 'rgba(0, 89, 255, 0.9)',
+                lineWidth: 2,
+                priceLineVisible: true,
+                lastValueVisible: true,
+                lineStyle: LightweightCharts.LineStyle.Dashed,
+            });
+            baselineSeries.setData([
+                { time: params.start_time, value: params.start_price },
+                { time: params.end_time, value: params.end_price }
+            ]);
+            lrcLineSeries.push(baselineSeries);
+
+            // --- Draw Deviation Lines ---
+            const lineOptions = {
+                lineWidth: 1,
+                priceLineVisible: true,
+                lastValueVisible: true,
+                lineStyle: LightweightCharts.LineStyle.Dotted,
+            };
+
+            deviations.forEach(level => {
+                // Upper Line
+                const upperSeries = chart.addLineSeries({ ...lineOptions, color: 'rgba(239, 83, 80, 0.8)' });
+                upperSeries.setData([
+                    { time: params.start_time, value: params.start_price + (level * stdDev) },
+                    { time: params.end_time, value: params.end_price + (level * stdDev) }
+                ]);
+                lrcLineSeries.push(upperSeries);
+
+                // Lower Line
+                const lowerSeries = chart.addLineSeries({ ...lineOptions, color: 'rgba(38, 166, 154, 0.8)' });
+                lowerSeries.setData([
+                    { time: params.start_time, value: params.start_price - (level * stdDev) },
+                    { time: params.end_time, value: params.end_price - (level * stdDev) }
+                ]);
+                lrcLineSeries.push(lowerSeries);
+            });
+        }
+
+        document.getElementById('generate-chart-btn').addEventListener('click', fetchAndDrawChart);
+        
+        window.addEventListener('resize', () => {
+            chart.applyOptions({ width: chartElement.clientWidth });
+        });
+    });
+    </script>
+</body>
+</html> 

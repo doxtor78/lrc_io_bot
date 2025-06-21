@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTC Funding Rates Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: #f7f8fa;
+            margin: 0;
+            padding: 0;
+        }
+        .chart-section {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 24px 20px 20px 20px;
+            max-width: 900px;
+            margin: 40px auto 24px auto;
+        }
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 8px;
+        }
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .lrc-settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .lrc-settings-grid label {
+            grid-column: span 2;
+        }
+        .lrc-settings-grid input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #lrc-apply-settings {
+            margin-top: 20px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        .dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+            margin: 0 auto 40px auto;
+            max-width: 1200px;
+        }
+        .matrix-section {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 24px 20px 20px 20px;
+            min-width: 320px;
+            flex: 1 1 420px;
+            margin-bottom: 24px;
+            border: 1.5px solid #e5e7eb;
+        }
+        .matrix-section.token-margined {
+            min-width: 220px;
+            max-width: 260px;
+        }
+        .matrix-title {
+            font-size: 1.25em;
+            font-weight: bold;
+            margin-bottom: 18px;
+            text-align: left;
+            letter-spacing: 0.01em;
+        }
+        .matrix-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+        .matrix-table th, .matrix-table td {
+            padding: 10px 8px;
+            text-align: center;
+            font-size: 1.08em;
+        }
+        .matrix-table th {
+            background: #f0f2f5;
+            font-weight: 700;
+            border-bottom: 2px solid #e0e0e0;
+            position: relative;
+        }
+        .matrix-table th .exchange-icon {
+            display: block;
+            margin: 0 auto 4px auto;
+            width: 24px;
+            height: 24px;
+        }
+        .matrix-table tr {
+            transition: background 0.15s;
+        }
+        .matrix-table tr:hover {
+            background: #f7fafc;
+        }
+        .matrix-table td {
+            background: #fff;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 1.08em;
+        }
+        .rate-pos { color: #16a34a; font-weight: bold; }
+        .rate-neg { color: #e11d48; font-weight: bold; }
+        .btc-icon {
+            font-size: 1.3em;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+        .predicted-row td {
+            color: #888;
+            font-style: italic;
+            background: #f8fafc;
+        }
+        @media (max-width: 900px) {
+            .dashboard-container { flex-direction: column; align-items: center; }
+            .chart-section { margin: 24px 8px; }
+            .matrix-section.token-margined { max-width: 100%; min-width: 220px; }
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center; margin-top:32px;">BTC Funding Rates Matrix</h1>
+    <div class="chart-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div style="font-size:1.1em; font-weight:600;" id="chart-title">BitMEX XBTUSD Price Chart</div>
+            <div>
+                <button id="toggle-lrc-btn" class="timeframe-btn">Show LRC</button>
+                <button id="lrc-settings-btn" class="timeframe-btn">⚙️ Settings</button>
+                <button class="timeframe-btn" data-bin-size="1m">1m</button>
+                <button class="timeframe-btn" data-bin-size="5m">5m</button>
+                <button class="timeframe-btn" data-bin-size="1h">1H</button>
+                <button class="timeframe-btn" data-bin-size="1d">1D</button>
+            </div>
+        </div>
+        <div id="chart" style="width:100%; height:400px;"></div>
+        <div id="chart-status" style="color:#888; font-size:0.95em; margin-top:8px;">Loading chart data...</div>
+    </div>
+    <div class="dashboard-container" id="dashboard-container">
+        <!-- Tables will be injected here -->
+    </div>
+
+    <div id="lrc-settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>LRC Settings</h3>
+            <form id="lrc-settings-form">
+                <input type="checkbox" id="lrc-use-date-range" checked>
+                <label for="lrc-use-date-range">Use Date Range</label><br><br>
+                
+                <div class="date-inputs">
+                    <label>Start Year: <input type="number" id="lrc-start-year" value="2025" style="width: 70px;"></label>
+                    <label>Month: <input type="number" id="lrc-start-month" value="1" min="1" max="12" style="width: 50px;"></label>
+                    <label>Day: <input type="number" id="lrc-start-day" value="1" min="1" max="31" style="width: 50px;"></label>
+                    <label>Hour: <input type="number" id="lrc-start-hour" value="0" min="0" max="23" style="width: 50px;"></label>
+                    <label>Min: <input type="number" id="lrc-start-minute" value="0" min="0" max="59" style="width: 50px;"></label>
+                    <label>Sec: <input type="number" id="lrc-start-second" value="0" min="0" max="59" style="width: 50px;"></label>
+                </div><br>
+
+                <label>Show Standard Deviations:</label><br>
+                <input type="checkbox" id="lrc-dev-1" value="1" checked> <label for="lrc-dev-1">1σ</label>
+                <input type="checkbox" id="lrc-dev-2" value="2" checked> <label for="lrc-dev-2">2σ</label>
+                <input type="checkbox" id="lrc-dev-3" value="3" checked> <label for="lrc-dev-3">3σ</label>
+                <input type="checkbox" id="lrc-dev-4" value="4" checked> <label for="lrc-dev-4">4σ</label>
+                <br><br>
+
+                <button type="submit" class="timeframe-btn">Apply</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chartElement = document.getElementById('chart');
+        const chartStatus = document.getElementById('chart-status');
+        const chartTitle = document.getElementById('chart-title');
+        const chart = LightweightCharts.createChart(chartElement, {
+            width: chartElement.clientWidth,
+            height: 400,
+            layout: {
+                background: { type: 'solid', color: '#ffffff' },
+                textColor: '#333',
+            },
+            grid: {
+                vertLines: { color: '#e0e0e0' },
+                horzLines: { color: '#e0e0e0' },
+            },
+            timeScale: {
+                timeVisible: true,
+                secondsVisible: false,
+            }
+        });
+
+        let candleSeries = null;
+        let lrcSeries = []; // To hold all LRC related line series
+
+        // --- Modal & Form Logic ---
+        const modal = document.getElementById('lrc-settings-modal');
+        const settingsBtn = document.getElementById('lrc-settings-btn');
+        const closeBtn = document.querySelector('.modal .close-btn');
+        const settingsForm = document.getElementById('lrc-settings-form');
+        const useDateRangeCheckbox = document.getElementById('lrc-use-date-range');
+        const dateInputs = document.querySelector('.date-inputs');
+
+        settingsBtn.addEventListener('click', () => modal.style.display = 'block');
+        closeBtn.addEventListener('click', () => modal.style.display = 'none');
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+        useDateRangeCheckbox.addEventListener('change', () => {
+            dateInputs.style.display = useDateRangeCheckbox.checked ? 'block' : 'none';
+        });
+
+        // --- Main Charting Function ---
+        async function fetchAndDrawChart(binSize = '1h') {
+            chartStatus.textContent = `Loading ${binSize} data...`;
+            chartTitle.textContent = `Binance BTC/USDT Price Chart (${binSize})`;
+
+            // --- Clear all previous series to ensure correct layering ---
+            lrcSeries.forEach(series => chart.removeSeries(series));
+            lrcSeries = [];
+            if (candleSeries) {
+                chart.removeSeries(candleSeries);
+                candleSeries = null;
+            }
+
+            const showLrc = document.getElementById('toggle-lrc-btn').classList.contains('active');
+            
+            let url = `/historical-data?binSize=${binSize}`;
+            let lrcParams = '';
+
+            if (showLrc) {
+                const useDateRange = useDateRangeCheckbox.checked;
+                let startTimestamp = '';
+
+                if (useDateRange) {
+                    const year = document.getElementById('lrc-start-year').value;
+                    const month = document.getElementById('lrc-start-month').value;
+                    const day = document.getElementById('lrc-start-day').value;
+                    const hour = document.getElementById('lrc-start-hour').value;
+                    const minute = document.getElementById('lrc-start-minute').value;
+                    const second = document.getElementById('lrc-start-second').value;
+                    // Construct a date object in UTC
+                    const startDate = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+                    startTimestamp = Math.floor(startDate.getTime() / 1000);
+                }
+                
+                const deviations = Array.from(document.querySelectorAll('input[id^="lrc-dev-"]:checked'))
+                                       .map(cb => cb.value).join(',');
+                
+                lrcParams = `&useDateRange=${useDateRange}&startTimestamp=${startTimestamp}&deviations=${deviations}`;
+                url = `/api/lrc-data?binSize=${binSize}${lrcParams}`;
+            }
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                const candles = showLrc ? data.candles : data;
+                const lrcData = showLrc ? data.lrc : null;
+
+                // --- Draw chart elements in the correct order ---
+                
+                // 1. Draw background zones first
+                if (showLrc && lrcData && lrcData.params) {
+                    drawLRCZones(lrcData);
+                }
+
+                // 2. Draw candles on top of zones
+                candleSeries = chart.addCandlestickSeries({
+                    upColor: 'rgba(38, 166, 154, 1)',
+                    downColor: 'rgba(239, 83, 80, 1)',
+                    borderDownColor: 'rgba(239, 83, 80, 1)',
+                    borderUpColor: 'rgba(38, 166, 154, 1)',
+                    wickDownColor: 'rgba(239, 83, 80, 1)',
+                    wickUpColor: 'rgba(38, 166, 154, 1)',
+                });
+                candleSeries.setData(candles);
+                
+                // 3. Draw lines on top of candles
+                if (showLrc && lrcData && lrcData.params) {
+                    drawLRCLines(lrcData);
+                }
+
+                chart.timeScale().fitContent();
+                chartStatus.textContent = 'Last updated: ' + new Date().toLocaleTimeString();
+            } catch (error) {
+                console.error('Failed to fetch chart data:', error);
+                chartStatus.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        function drawLRCZones(lrcData) {
+            const params = lrcData.params;
+            const stdDev = params.std_dev;
+
+            const createLineData = (level) => [
+                { time: params.start_time, value: params.start_price + level * stdDev },
+                { time: params.end_time, value: params.end_price + level * stdDev }
+            ];
+
+            const createAreaFill = (data, color) => {
+                const series = chart.addAreaSeries({
+                    topColor: color,
+                    bottomColor: color,
+                    priceLineVisible: false,
+                    lastValueVisible: false,
+                    crosshairMarkerVisible: false,
+                    lineVisible: false,
+                });
+                series.setData(data);
+                lrcSeries.push(series);
+            };
+            
+            const backgroundColor = '#ffffff';
+
+            const upper2Data = createLineData(2);
+            const upper1Data = createLineData(1);
+            const lower1Data = createLineData(-1);
+            const lower2Data = createLineData(-2);
+            
+            // Draw from top to bottom to ensure correct layering
+            createAreaFill(upper2Data, 'rgba(239, 83, 80, 0.2)');
+            createAreaFill(upper1Data, backgroundColor);
+
+            createAreaFill(upper1Data, 'rgba(120, 120, 120, 0.1)');
+            createAreaFill(lower1Data, backgroundColor);
+
+            createAreaFill(lower1Data, 'rgba(38, 166, 154, 0.2)');
+            createAreaFill(lower2Data, backgroundColor);
+        }
+
+        function drawLRCLines(lrcData) {
+            const params = lrcData.params;
+            const deviations = lrcData.deviations;
+            const stdDev = params.std_dev;
+
+            // Draw the dashed blue baseline
+            const baselineSeries = chart.addLineSeries({
+                color: 'rgba(0, 89, 255, 0.9)',
+                lineWidth: 2,
+                priceLineVisible: true,
+                lastValueVisible: true,
+                lineStyle: LightweightCharts.LineStyle.Dashed,
+            });
+            baselineSeries.setData([
+                { time: params.start_time, value: params.start_price },
+                { time: params.end_time, value: params.end_price }
+            ]);
+            lrcSeries.push(baselineSeries);
+
+            // Draw the dotted red/green deviation lines
+            const lineOptions = {
+                lineWidth: 1,
+                priceLineVisible: true,
+                lastValueVisible: true,
+                lineStyle: LightweightCharts.LineStyle.Dotted,
+            };
+
+            deviations.forEach(level => {
+                const upperSeries = chart.addLineSeries({ ...lineOptions, color: 'rgba(239, 83, 80, 0.8)' });
+                upperSeries.setData([
+                    { time: params.start_time, value: params.start_price + (level * stdDev) },
+                    { time: params.end_time, value: params.end_price + (level * stdDev) }
+                ]);
+                lrcSeries.push(upperSeries);
+
+                const lowerSeries = chart.addLineSeries({ ...lineOptions, color: 'rgba(38, 166, 154, 0.8)' });
+                lowerSeries.setData([
+                    { time: params.start_time, value: params.start_price - (level * stdDev) },
+                    { time: params.end_time, value: params.end_price - (level * stdDev) }
+                ]);
+                lrcSeries.push(lowerSeries);
+            });
+        }
+
+        // --- Event Listeners ---
+        document.querySelectorAll('.timeframe-btn').forEach(button => {
+            if (button.dataset.binSize) {
+                button.addEventListener('click', () => fetchAndDrawChart(button.dataset.binSize));
+            }
+        });
+
+        const toggleLrcBtn = document.getElementById('toggle-lrc-btn');
+        toggleLrcBtn.addEventListener('click', () => {
+            toggleLrcBtn.classList.toggle('active');
+            toggleLrcBtn.textContent = toggleLrcBtn.classList.contains('active') ? 'Hide LRC' : 'Show LRC';
+            // Refetch data with or without LRC
+            const currentBinSize = document.querySelector('.timeframe-btn.active')?.dataset.binSize || '1h';
+            fetchAndDrawChart(currentBinSize);
+        });
+
+        settingsForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            modal.style.display = 'none'; // Hide modal on apply
+            const currentBinSize = document.querySelector('.timeframe-btn.active')?.dataset.binSize || '1h';
+            fetchAndDrawChart(currentBinSize);
+        });
+        
+        // Initial chart load
+        fetchAndDrawChart('1h');
+    });
+    </script>
+</body>
+</html>
