@@ -3,6 +3,7 @@ import os
 import time
 import requests
 import ccxt
+import json
 
 # Check if running in virtual environment
 if not hasattr(sys, 'real_prefix') and not hasattr(sys, 'base_prefix') or sys.base_prefix == sys.prefix:
@@ -22,6 +23,19 @@ import logging
 from lrc_calculator import calculate_lrc_parameters
 
 app = Flask(__name__)
+
+# --- Cache Busting ---
+# Ensure templates are auto-reloaded and not cached by the browser
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
+@app.after_request
+def add_header(response):
+    """Add headers to force latest content and prevent caching."""
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '-1'
+    return response
 
 # --- Binance API Credentials (with security warning) ---
 # For your security, please REVOKE these keys from your Binance account after this session.
@@ -153,12 +167,21 @@ def get_lrc_data():
         # --- 1. Get parameters and instantiate exchange ---
         bin_size = request.args.get('binSize', '1h')
         use_date_range = request.args.get('useDateRange', 'false').lower() == 'true'
-        start_timestamp = request.args.get('startTimestamp', type=int)
+        
+        # Timestamp for the start of the data fetch for the entire chart
+        fetch_start_timestamp = request.args.get('startTimestamp', type=int)
+        
+        # Timestamp for the inflection point where the LRC calculation begins
+        inflection_timestamp = request.args.get('inflectionTimestamp', type=int)
 
-        if not start_timestamp:
+        if not fetch_start_timestamp:
             # As a fallback, default to 90 days ago if no specific start date is given.
             fallback_date = datetime.now() - timedelta(days=90)
-            start_timestamp = int(fallback_date.timestamp())
+            fetch_start_timestamp = int(fallback_date.timestamp())
+
+        # If no inflection point is passed, default it to the fetch start time
+        if not inflection_timestamp:
+            inflection_timestamp = fetch_start_timestamp
 
         exchange = ccxt.binance({
             'apiKey': BINANCE_API_KEY,
@@ -167,7 +190,7 @@ def get_lrc_data():
         })
         
         # --- 2. Fetch all data since the start date ---
-        ohlcv = _fetch_all_candles_since(exchange, 'BTC/USDT', bin_size, start_timestamp)
+        ohlcv = _fetch_all_candles_since(exchange, 'BTC/USDT', bin_size, fetch_start_timestamp)
         
         if not ohlcv:
             return jsonify({'error': 'No data found for the specified date range.'}), 404
@@ -188,7 +211,7 @@ def get_lrc_data():
             return jsonify({"error": "Invalid deviations format. Use comma-separated numbers."}), 400
 
         # --- 4. Calculate LRC ---
-        lrc_params = calculate_lrc_parameters(candles, use_date_range=use_date_range, start_timestamp=start_timestamp)
+        lrc_params = calculate_lrc_parameters(candles, use_date_range=use_date_range, start_timestamp=inflection_timestamp)
 
         if not lrc_params:
             return jsonify({"candles": candles, "lrc": None})
@@ -196,8 +219,17 @@ def get_lrc_data():
         # --- 5. Structure the response ---
         lrc_data = {
             'params': lrc_params,
-            'deviations': deviations
+            'deviations': deviations,
+            'timeframe': bin_size
         }
+
+        # --- 6. Save LRC params for the bot ---
+        try:
+            with open('stable_v3/lrc_params.json', 'w') as f:
+                json.dump(lrc_data, f, indent=4)
+            app.logger.info("Successfully saved LRC parameters to lrc_params.json")
+        except Exception as e:
+            app.logger.error(f"Error saving LRC parameters to file: {e}")
 
         return jsonify({"candles": candles, "lrc": lrc_data})
 

@@ -74,5 +74,7 @@ def calculate_lrc_parameters(data, use_date_range=False, start_timestamp=None):
         'start_price': start_price,
         'end_time': calc_data[end_point_index]['time'],
         'end_price': end_price,
-        'std_dev': std_dev
+        'std_dev': std_dev,
+        'slope': slope,
+        'intercept': intercept
     } 

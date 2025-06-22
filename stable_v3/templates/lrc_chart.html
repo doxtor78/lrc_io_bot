@@ -23,18 +23,45 @@
         <h1>LRC Chart Generator</h1>
         <p>Select a start date and time to draw the Linear Regression Channel for BTC/USDT (1h timeframe).</p>
         <div class="form-group">
+            <label>Timeframe:</label>
+            <select id="timeframe-select" style="padding: 0.5em;">
+                <option value="1m">1 Minute</option>
+                <option value="5m">5 Minutes</option>
+                <option value="15m">15 Minutes</option>
+                <option value="1h" selected>1 Hour</option>
+                <option value="4h">4 Hours</option>
+                <option value="1d">1 Day</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label>Start Date:</label>
-            <input type="number" id="lrc-start-year" value="2024" style="width: 70px;">
+            <input type="number" id="lrc-start-year" value="2025" style="width: 70px;">
             <label>Month:</label>
             <input type="number" id="lrc-start-month" value="6" min="1" max="12" style="width: 50px;">
             <label>Day:</label>
-            <input type="number" id="lrc-start-day" value="10" min="1" max="31" style="width: 50px;">
+            <input type="number" id="lrc-start-day" value="21" min="1" max="31" style="width: 50px;">
             <label>Hour:</label>
-            <input type="number" id="lrc-start-hour" value="21" min="0" max="23" style="width: 50px;">
+            <input type="number" id="lrc-start-hour" value="14" min="0" max="23" style="width: 50px;">
             <label>Minute:</label>
             <input type="number" id="lrc-start-minute" value="0" min="0" max="59" style="width: 50px;">
             <label>Second:</label>
             <input type="number" id="lrc-start-second" value="0" min="0" max="59" style="width: 50px;">
+        </div>
+        <div class="form-group">
+            <label>Inflection Point:</label>
+            <input type="number" id="inflection-year" value="2025" style="width: 70px;">
+            <label>Month:</label>
+            <input type="number" id="inflection-month" value="6" min="1" max="12" style="width: 50px;">
+            <label>Day:</label>
+            <input type="number" id="inflection-day" value="21" min="1" max="31" style="width: 50px;">
+            <label>Hour:</label>
+            <input type="number" id="inflection-hour" value="14" min="0" max="23" style="width: 50px;">
+            <label>Minute:</label>
+            <input type="number" id="inflection-minute" value="0" min="0" max="59" style="width: 50px;">
+            <label>Second:</label>
+            <input type="number" id="inflection-second" value="0" min="0" max="59" style="width: 50px;">
+        </div>
+        <div class="form-group">
             <button id="generate-chart-btn">Generate Chart</button>
         </div>
         <div id="chart"></div>
@@ -76,8 +103,18 @@
             const second = document.getElementById('lrc-start-second').value;
             const startDate = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
             const startTimestamp = Math.floor(startDate.getTime() / 1000);
+
+            const inflectionYear = document.getElementById('inflection-year').value;
+            const inflectionMonth = document.getElementById('inflection-month').value;
+            const inflectionDay = document.getElementById('inflection-day').value;
+            const inflectionHour = document.getElementById('inflection-hour').value;
+            const inflectionMinute = document.getElementById('inflection-minute').value;
+            const inflectionSecond = document.getElementById('inflection-second').value;
+            const inflectionDate = new Date(Date.UTC(inflectionYear, inflectionMonth - 1, inflectionDay, inflectionHour, inflectionMinute, inflectionSecond));
+            const inflectionTimestamp = Math.floor(inflectionDate.getTime() / 1000);
             
-            const url = `/api/lrc-data?binSize=1h&useDateRange=true&startTimestamp=${startTimestamp}&deviations=1,2,3,4`;
+            const timeframe = document.getElementById('timeframe-select').value;
+            const url = `/api/lrc-data?binSize=${timeframe}&useDateRange=true&startTimestamp=${startTimestamp}&inflectionTimestamp=${inflectionTimestamp}&deviations=1,2,3,4`;
 
             try {
                 const response = await fetch(url);
