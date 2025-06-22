@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LRC Chart Generator</title>
-    <script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background: #f4f7f9; margin: 0; padding: 2em; display: flex; flex-direction: column; align-items: center; }
         .container { background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 2em; width: 100%; max-width: 900px; }
         h1 { margin-top: 0; }
         .form-group { display: flex; gap: 1em; align-items: center; margin-bottom: 1.5em; flex-wrap: wrap; }
         .form-group label { font-weight: 500; }
-        .form-group input { padding: 0.5em; border-radius: 4px; border: 1px solid #ccc; }
+        .form-group input, .form-group select { padding: 0.5em; border-radius: 4px; border: 1px solid #ccc; }
         .form-group button { padding: 0.6em 1.2em; border: none; background: #007aff; color: white; border-radius: 4px; font-size: 1em; cursor: pointer; transition: background 0.2s; }
         .form-group button:hover { background: #0056b3; }
         #chart { width: 100%; height: 500px; margin-top: 1em; }
@@ -23,8 +23,9 @@
         <h1>LRC Chart Generator (BitMEX Testnet)</h1>
         <p>Select a start date and time to draw the Linear Regression Channel for XBTUSD.</p>
         <div class="form-group">
-            <label>Timeframe:</label>
-            <select id="timeframe-select" style="padding: 0.5em;">
+            <label for="binSize">Timeframe</label>
+            <select id="binSize">
+                <option value="10s">10 Seconds</option>
                 <option value="1m">1 Minute</option>
                 <option value="5m">5 Minutes</option>
                 <option value="15m">15 Minutes</option>
@@ -35,34 +36,34 @@
         </div>
         <div class="form-group">
             <label>Start Date:</label>
-            <input type="number" id="lrc-start-year" value="2025" style="width: 70px;">
+            <input type="number" id="startYear" style="width: 70px;">
             <label>Month:</label>
-            <input type="number" id="lrc-start-month" value="6" min="1" max="12" style="width: 50px;">
+            <input type="number" id="startMonth" min="1" max="12" style="width: 50px;">
             <label>Day:</label>
-            <input type="number" id="lrc-start-day" value="21" min="1" max="31" style="width: 50px;">
+            <input type="number" id="startDay" min="1" max="31" style="width: 50px;">
             <label>Hour:</label>
-            <input type="number" id="lrc-start-hour" value="14" min="0" max="23" style="width: 50px;">
+            <input type="number" id="startHour" min="0" max="23" style="width: 50px;">
             <label>Minute:</label>
-            <input type="number" id="lrc-start-minute" value="0" min="0" max="59" style="width: 50px;">
+            <input type="number" id="startMinute" min="0" max="59" style="width: 50px;">
             <label>Second:</label>
-            <input type="number" id="lrc-start-second" value="0" min="0" max="59" style="width: 50px;">
+            <input type="number" id="startSecond" min="0" max="59" style="width: 50px;">
         </div>
         <div class="form-group">
             <label>Inflection Point:</label>
-            <input type="number" id="inflection-year" value="2025" style="width: 70px;">
+            <input type="number" id="inflectionYear" style="width: 70px;">
             <label>Month:</label>
-            <input type="number" id="inflection-month" value="6" min="1" max="12" style="width: 50px;">
+            <input type="number" id="inflectionMonth" min="1" max="12" style="width: 50px;">
             <label>Day:</label>
-            <input type="number" id="inflection-day" value="21" min="1" max="31" style="width: 50px;">
+            <input type="number" id="inflectionDay" min="1" max="31" style="width: 50px;">
             <label>Hour:</label>
-            <input type="number" id="inflection-hour" value="14" min="0" max="23" style="width: 50px;">
+            <input type="number" id="inflectionHour" min="0" max="23" style="width: 50px;">
             <label>Minute:</label>
-            <input type="number" id="inflection-minute" value="0" min="0" max="59" style="width: 50px;">
+            <input type="number" id="inflectionMinute" min="0" max="59" style="width: 50px;">
             <label>Second:</label>
-            <input type="number" id="inflection-second" value="0" min="0" max="59" style="width: 50px;">
+            <input type="number" id="inflectionSecond" min="0" max="59" style="width: 50px;">
         </div>
         <div class="form-group">
-            <button id="generate-chart-btn">Generate Chart</button>
+            <button id="generateChart">Generate Chart</button>
         </div>
         <div id="chart"></div>
         <div id="chart-status">Enter a date and click "Generate Chart".</div>
@@ -78,7 +79,7 @@
             height: 500,
             layout: { background: { type: 'solid', color: '#ffffff' }, textColor: '#333' },
             grid: { vertLines: { color: '#f0f0f0' }, horzLines: { color: '#f0f0f0' } },
-            timeScale: { timeVisible: true, secondsVisible: false }
+            timeScale: { timeVisible: true, secondsVisible: true }
         });
 
         let candleSeries = null;
@@ -87,7 +88,6 @@
         async function fetchAndDrawChart() {
             chartStatus.textContent = 'Loading data...';
 
-            // --- Clear all previous series to ensure correct layering ---
             lrcLineSeries.forEach(series => chart.removeSeries(series));
             lrcLineSeries = [];
             if (candleSeries) {
@@ -95,25 +95,25 @@
                 candleSeries = null;
             }
 
-            const year = document.getElementById('lrc-start-year').value;
-            const month = document.getElementById('lrc-start-month').value;
-            const day = document.getElementById('lrc-start-day').value;
-            const hour = document.getElementById('lrc-start-hour').value;
-            const minute = document.getElementById('lrc-start-minute').value;
-            const second = document.getElementById('lrc-start-second').value;
+            const year = document.getElementById('startYear').value;
+            const month = document.getElementById('startMonth').value;
+            const day = document.getElementById('startDay').value;
+            const hour = document.getElementById('startHour').value;
+            const minute = document.getElementById('startMinute').value;
+            const second = document.getElementById('startSecond').value;
             const startDate = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
             const startTimestamp = Math.floor(startDate.getTime() / 1000);
 
-            const inflectionYear = document.getElementById('inflection-year').value;
-            const inflectionMonth = document.getElementById('inflection-month').value;
-            const inflectionDay = document.getElementById('inflection-day').value;
-            const inflectionHour = document.getElementById('inflection-hour').value;
-            const inflectionMinute = document.getElementById('inflection-minute').value;
-            const inflectionSecond = document.getElementById('inflection-second').value;
+            const inflectionYear = document.getElementById('inflectionYear').value;
+            const inflectionMonth = document.getElementById('inflectionMonth').value;
+            const inflectionDay = document.getElementById('inflectionDay').value;
+            const inflectionHour = document.getElementById('inflectionHour').value;
+            const inflectionMinute = document.getElementById('inflectionMinute').value;
+            const inflectionSecond = document.getElementById('inflectionSecond').value;
             const inflectionDate = new Date(Date.UTC(inflectionYear, inflectionMonth - 1, inflectionDay, inflectionHour, inflectionMinute, inflectionSecond));
             const inflectionTimestamp = Math.floor(inflectionDate.getTime() / 1000);
             
-            const timeframe = document.getElementById('timeframe-select').value;
+            const timeframe = document.getElementById('binSize').value;
             const url = `/api/lrc-data?binSize=${timeframe}&useDateRange=true&startTimestamp=${startTimestamp}&inflectionTimestamp=${inflectionTimestamp}&deviations=1,2,3,4`;
 
             try {
@@ -121,10 +121,8 @@
                 const data = await response.json();
 
                 if (data.error) throw new Error(data.error);
+                if (!data.candles || data.candles.length === 0) throw new Error("No candle data received.");
 
-                // --- Draw chart elements in the correct order ---
-                
-                // 1. Draw background zones first
                 if (data.lrc_full && data.lrc_full.params && data.lrc_full.params.start_time) {
                     drawLRCZones(data.lrc_full, true);
                 }
@@ -132,18 +130,13 @@
                     drawLRCZones(data.lrc, false);
                 }
 
-                // 2. Draw candles on top of zones
-                candleSeries = chart.addCandlestickSeries({
-                    upColor: 'rgba(38, 166, 154, 1)',
-                    downColor: 'rgba(239, 83, 80, 1)',
-                    borderDownColor: 'rgba(239, 83, 80, 1)',
-                    borderUpColor: 'rgba(38, 166, 154, 1)',
-                    wickDownColor: 'rgba(239, 83, 80, 1)',
-                    wickUpColor: 'rgba(38, 166, 154, 1)',
+                candleSeries = chart.addSeries(LightweightCharts.CandlestickSeries, {
+                    upColor: 'rgba(38, 166, 154, 1)', downColor: 'rgba(239, 83, 80, 1)',
+                    borderDownColor: 'rgba(239, 83, 80, 1)', borderUpColor: 'rgba(38, 166, 154, 1)',
+                    wickDownColor: 'rgba(239, 83, 80, 1)', wickUpColor: 'rgba(38, 166, 154, 1)',
                 });
                 candleSeries.setData(data.candles);
-                
-                // 3. Draw lines on top of candles
+
                 if (data.lrc_full && data.lrc_full.params && data.lrc_full.params.start_time) {
                     drawLRCLines(data.lrc_full, true);
                 }
@@ -158,48 +151,52 @@
                 chartStatus.textContent = `Error: ${error.message}`;
             }
         }
-
+        
         function drawLRCZones(lrcData, isFaint) {
             const params = lrcData.params;
             const stdDev = params.std_dev;
-            const opacity = isFaint ? 0.05 : 0.2;
+            const opacity = isFaint ? 0.05 : 0.1;
 
             const createLineData = (level) => [
                 { time: params.start_time, value: params.start_price + level * stdDev },
                 { time: params.end_time, value: params.end_price + level * stdDev }
             ];
 
-            const createAreaFill = (data, color) => {
-                const series = chart.addAreaSeries({
+            const upper4 = createLineData(4);
+            const upper1 = createLineData(1);
+            const lower1 = createLineData(-1);
+            const lower4 = createLineData(-4);
+
+            const addArea = (topData, bottomData, color) => {
+                // This is a workaround to fill the area. Lightweight charts area series only fills to the bottom.
+                // We are not using it as intended. This is a bit of a hack.
+                const fillSeries = chart.addSeries(LightweightCharts.AreaSeries, {
                     topColor: color,
                     bottomColor: color,
                     priceLineVisible: false,
                     lastValueVisible: false,
-                    crosshairMarkerVisible: false,
                     lineWidth: 0,
-                    lineVisible: false
                 });
-                series.setData(data);
-                lrcLineSeries.push(series);
+                fillSeries.setData(topData);
+
+                const eraseSeries = chart.addSeries(LightweightCharts.AreaSeries, {
+                    topColor: 'rgba(255,255,255,1)',
+                    bottomColor: 'rgba(255,255,255,1)',
+                    priceLineVisible: false,
+                    lastValueVisible: false,
+                    lineWidth: 0,
+                });
+                eraseSeries.setData(bottomData);
+
+                lrcLineSeries.push(fillSeries);
+                lrcLineSeries.push(eraseSeries);
             };
-            
-            const backgroundColor = '#ffffff';
 
-            const upper4Data = createLineData(4);
-            const upper1Data = createLineData(1);
-            const lower1Data = createLineData(-1);
-            const lower4Data = createLineData(-4);
-            
-            // Draw from top to bottom to ensure correct layering
-            createAreaFill(upper4Data, `rgba(239, 83, 80, ${opacity})`);
-            createAreaFill(upper1Data, backgroundColor);
-
-            createAreaFill(upper1Data, `rgba(120, 120, 120, ${opacity / 2})`);
-            createAreaFill(lower1Data, backgroundColor);
-
-            createAreaFill(lower1Data, `rgba(38, 166, 154, ${opacity})`);
-            createAreaFill(lower4Data, backgroundColor);
+            addArea(upper4, upper1, `rgba(239, 83, 80, ${opacity})`);
+            addArea(upper1, lower1, `rgba(120, 120, 120, ${opacity / 2})`);
+            addArea(lower1, lower4, `rgba(38, 166, 154, ${opacity})`);
         }
+
 
         function drawLRCLines(lrcData, isFaint) {
             const params = lrcData.params;
@@ -207,39 +204,30 @@
             const stdDev = params.std_dev;
             const opacity = isFaint ? 0.4 : 0.9;
 
-            // --- Draw Baseline ---
-            const baselineSeries = chart.addLineSeries({
-                color: `rgba(0, 89, 255, ${opacity})`,
-                lineWidth: isFaint ? 1 : 2,
-                priceLineVisible: true,
-                lastValueVisible: true,
+            const baselineSeries = chart.addSeries(LightweightCharts.LineSeries, {
+                color: `rgba(0, 89, 255, ${opacity})`, lineWidth: isFaint ? 1 : 2,
+                priceLineVisible: false, lastValueVisible: false,
                 lineStyle: isFaint ? LightweightCharts.LineStyle.Dotted : LightweightCharts.LineStyle.Dashed,
             });
             baselineSeries.setData([
-                { time: params.start_time, value: params.start_price },
-                { time: params.end_time, value: params.end_price }
+                { time: params.start_time, value: params.start_price }, { time: params.end_time, value: params.end_price }
             ]);
             lrcLineSeries.push(baselineSeries);
 
-            // --- Draw Deviation Lines ---
             const lineOptions = {
-                lineWidth: 1,
-                priceLineVisible: true,
-                lastValueVisible: true,
+                lineWidth: 1, priceLineVisible: false, lastValueVisible: false,
                 lineStyle: LightweightCharts.LineStyle.Dotted,
             };
 
             deviations.forEach(level => {
-                // Upper Line
-                const upperSeries = chart.addLineSeries({ ...lineOptions, color: `rgba(239, 83, 80, ${opacity})` });
+                const upperSeries = chart.addSeries(LightweightCharts.LineSeries, { ...lineOptions, color: `rgba(239, 83, 80, ${opacity})` });
                 upperSeries.setData([
                     { time: params.start_time, value: params.start_price + (level * stdDev) },
                     { time: params.end_time, value: params.end_price + (level * stdDev) }
                 ]);
                 lrcLineSeries.push(upperSeries);
 
-                // Lower Line
-                const lowerSeries = chart.addLineSeries({ ...lineOptions, color: `rgba(38, 166, 154, ${opacity})` });
+                const lowerSeries = chart.addSeries(LightweightCharts.LineSeries, { ...lineOptions, color: `rgba(38, 166, 154, ${opacity})` });
                 lowerSeries.setData([
                     { time: params.start_time, value: params.start_price - (level * stdDev) },
                     { time: params.end_time, value: params.end_price - (level * stdDev) }
@@ -247,12 +235,31 @@
                 lrcLineSeries.push(lowerSeries);
             });
         }
-
-        document.getElementById('generate-chart-btn').addEventListener('click', fetchAndDrawChart);
+        
+        document.getElementById('generateChart').addEventListener('click', fetchAndDrawChart);
         
         window.addEventListener('resize', () => {
-            chart.applyOptions({ width: chartElement.clientWidth });
+            if (chart) {
+                chart.applyOptions({ width: chartElement.clientWidth });
+            }
         });
+
+        const now = new Date();
+        const start = new Date();
+        start.setDate(now.getDate() - 3);
+
+        const fields = {
+            inflectionYear: now.getFullYear(), inflectionMonth: now.getMonth() + 1, inflectionDay: now.getDate(),
+            inflectionHour: now.getHours(), inflectionMinute: now.getMinutes(), inflectionSecond: now.getSeconds(),
+            startYear: start.getFullYear(), startMonth: start.getMonth() + 1, startDay: start.getDate(),
+            startHour: start.getHours(), startMinute: start.getMinutes(), startSecond: start.getSeconds(),
+        };
+
+        for (const [id, value] of Object.entries(fields)) {
+            document.getElementById(id).value = value;
+        }
+
+        fetchAndDrawChart();
     });
     </script>
 </body>

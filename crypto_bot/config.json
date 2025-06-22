@@ -1,0 +1,9 @@
+{
+    "symbol": "XBTUSD",
+    "timeframe": "1m",
+    "sma_window": 50,
+    "order_size_contracts": 100,
+    "tick_size": 0.5,
+    "signal_confirm_bars": 1,
+    "order_timeout": 30
+  }

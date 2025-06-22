@@ -1,5 +1,6 @@
 {
-    "symbol": "BTC/USD",
-    "timeframe": "1h",
-    "sma_window": 50
+    "symbol": "XBTUSD",
+    "timeframe": "1m",
+    "sma_window": 50,
+    "order_size_contracts": 100
 }

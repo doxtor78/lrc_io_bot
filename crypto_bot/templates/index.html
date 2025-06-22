@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Refresh the page every 30 seconds -->
+    <meta http-equiv="refresh" content="30">
+    <title>Trading Bot Dashboard</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e1e4e8;
+        }
+        .stat-card h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #586069;
+        }
+        .stat-card p {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+        .chart-container {
+            margin-top: 20px;
+        }
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trading Bot Live Dashboard</h1>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h2>Current Price</h2>
+                <p>{{ data.price }}</p>
+            </div>
+            <div class="stat-card">
+                <h2>SMA</h2>
+                <p>{{ data.sma }}</p>
+            </div>
+            <div class="stat-card">
+                <h2>Current Position</h2>
+                <p>{{ data.position }}</p>
+            </div>
+            <div class="stat-card">
+                <h2>Strategy Signal</h2>
+                <p>{{ data.signal }}</p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <!-- The image is given a unique query parameter to prevent caching -->
+            <img src="{{ url_for('send_chart', filename=chart_file) }}?v={{ range(1, 100000) | random }}" alt="Trading Chart">
+        </div>
+        
+        <div class="footer">
+            Page automatically refreshes every 30 seconds.
+        </div>
+    </div>
+</body>
+</html> 

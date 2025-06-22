@@ -1,0 +1,6 @@
+ccxt
+pandas
+python-dotenv
+matplotlib
+Flask==2.0.3
+Werkzeug==2.0.3 

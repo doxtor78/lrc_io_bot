@@ -82,6 +82,71 @@ def index():
     """Renders the main chart page."""
     return render_template('index.html')
 
+def aggregate_trades_to_ohlcv(trades, bin_size_seconds):
+    if not trades:
+        return []
+    
+    df = pd.DataFrame(trades)
+    df['datetime'] = pd.to_datetime(df['timestamp'], unit='ms')
+    df.set_index('datetime', inplace=True)
+    
+    period = f"{bin_size_seconds}S"
+    
+    ohlc = df['price'].resample(period).ohlc()
+    volume = df['amount'].resample(period).sum()
+    
+    # Combine OHLC with Volume
+    df_resampled = ohlc.join(volume)
+    df_resampled.rename(columns={'amount': 'volume'}, inplace=True)
+
+    # Convert back to list of dicts format expected by the frontend
+    candles = []
+    for index, row in df_resampled.iterrows():
+        if pd.notna(row['open']):
+            candles.append({
+                'time': index.timestamp(),
+                'open': row['open'],
+                'high': row['high'],
+                'low': row['low'],
+                'close': row['close'],
+                'volume': row['volume']
+            })
+            
+    return candles
+
+def resample_ohlcv(ohlcv_list, period):
+    if not ohlcv_list:
+        return []
+
+    df = pd.DataFrame(ohlcv_list, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
+    df['datetime'] = pd.to_datetime(df['timestamp'], unit='ms')
+    df.set_index('datetime', inplace=True)
+
+    # Define aggregation rules
+    agg_rules = {
+        'open': 'first',
+        'high': 'max',
+        'low': 'min',
+        'close': 'last',
+        'volume': 'sum'
+    }
+
+    df_resampled = df.resample(period).agg(agg_rules)
+    df_resampled.dropna(inplace=True)
+
+    # Convert back to list of lists
+    resampled_list = []
+    for index, row in df_resampled.iterrows():
+        resampled_list.append([
+            int(index.timestamp() * 1000),
+            row['open'],
+            row['high'],
+            row['low'],
+            row['close'],
+            row['volume']
+        ])
+    return resampled_list
+
 @app.route('/api/lrc-data')
 def get_lrc_data():
     """Provides OHLCV and LRC data to the frontend chart."""
@@ -96,31 +161,51 @@ def get_lrc_data():
 
         # --- Fetch data from exchange ---
         exchange = initialize_exchange()
-        limit = 750 
-        since = int((datetime.now() - timedelta(days=limit / (24 if bin_size.endswith('h') else 1440))).timestamp() * 1000)
+        limit = 1000
+        ohlcv = []
+
+        # Define base timeframes for unsupported intervals
+        resampling_map = {
+            '15m': ('5m', '15T'),
+            '4h': ('1h', '4H')
+        }
+
+        if bin_size == '10s':
+            since = int((datetime.now() - timedelta(minutes=20)).timestamp() * 1000)
+            trades = exchange.fetch_trades('XBTUSD', since=since, limit=limit)
+            ohlcv_from_trades = aggregate_trades_to_ohlcv(trades, 10)
+            ohlcv = [[d['time'] * 1000, d['open'], d['high'], d['low'], d['close'], d.get('volume', 0)] for d in ohlcv_from_trades]
         
-        ohlcv = exchange.fetch_ohlcv('XBTUSD', bin_size, since=since, limit=limit)
+        elif bin_size in resampling_map:
+            base_timeframe, resample_period = resampling_map[bin_size]
+            since = int((datetime.now() - timedelta(days=30)).timestamp() * 1000)
+            base_ohlcv = exchange.fetch_ohlcv('XBTUSD', base_timeframe, since=since, limit=limit)
+            ohlcv = resample_ohlcv(base_ohlcv, resample_period)
+
+        else:
+            # For standard timeframes directly supported by the API
+            since = int((datetime.now() - timedelta(days=30)).timestamp() * 1000)
+            ohlcv = exchange.fetch_ohlcv('XBTUSD', bin_size, since=since, limit=limit)
         
+        if not ohlcv:
+            return jsonify({'error': f'Could not fetch or generate data for timeframe {bin_size}'})
+
         candles = [
             {'time': t / 1000, 'open': o, 'high': h, 'low': l, 'close': c}
             for t, o, h, l, c, v in ohlcv
         ]
 
         # --- Calculate Both LRCs ---
-        # The projected LRC is calculated up to the inflection point and drawn from there.
         lrc_projected_params = calculate_lrc_parameters_for_api(candles, use_date, start_ts, inflection_ts)
-
-        # The full-range LRC is calculated on all data from the start date.
-        # We'll reuse the same calculation function but without an inflection point.
         lrc_full_params = calculate_lrc_parameters_for_api(candles, use_date, start_ts, None)
 
         return jsonify({
             'candles': candles,
-            'lrc': { # Primary (projected) channel
+            'lrc': {
                 'params': lrc_projected_params,
                 'deviations': deviations
             },
-            'lrc_full': { # Secondary (full-range) channel
+            'lrc_full': {
                 'params': lrc_full_params,
                 'deviations': deviations
             }

@@ -1,0 +1,28 @@
+IN-AND-OUT BOT - WHAT'S NEW
+===========================
+
+Latest updates and user-requested features:
+
+1. **Robust BitMEX Position Fetching**
+   - Fixed position tracking to use BitMEX's private_get_position endpoint and currentQty for the configured symbol.
+   - No more 'asset' key errors; works reliably for BitMEX perpetuals.
+
+2. **Clear Action Logging**
+   - Prints explicit [ACTION] messages to the terminal and logs whenever the bot opens or closes a position with a limit order.
+   - Example: [ACTION] Opening BUY position with LIMIT order for 100 at 103088.5
+
+3. **Timing Information**
+   - Prints [TIMING] messages showing how long it takes from signal formation to order placement for both opening and closing positions.
+   - Example: [TIMING] Time to OPEN BUY after signal: 0.23 seconds
+
+4. **General Robustness**
+   - Modular code structure for easier maintenance and extension.
+   - Handles order management, amending/cancelling old or far-from-market orders.
+   - Signal confirmation logic and state persistence.
+
+5. **Backup/Stable Version**
+   - All code and config files are backed up to /Users/erhangocmez/IN-AND-OUT-BOT as a stable version.
+
+---
+
+For more details or to request new features, see the logs or contact your AI assistant! 

@@ -44,7 +44,7 @@ BINANCE_API_KEY = "8qaM9QUg28LHutP1Kaz0OUsH3vJNIAbEZZKc9diIjp851gK4fb90uRDXH4Nz4
 BINANCE_SECRET_KEY = "jjZCYNpdSXOeDPyt72PH5hnbimikM5WaTZpAdgDCbbSDZDW20NxpVzEhqM06jMaO"
 
 # BitMEX Testnet REST API base URL
-BITMEX_API = "https://www.bitmex.com/api/v1/"
+BITMEX_API = "https://testnet.bitmex.com/api/v1/"
 
 # Kraken API credentials
 KRAKEN_API_KEY = os.environ.get('KRAKEN_API_KEY', 'YOUR_KRAKEN_API_KEY')
@@ -183,14 +183,13 @@ def get_lrc_data():
         if not inflection_timestamp:
             inflection_timestamp = fetch_start_timestamp
 
-        exchange = ccxt.binance({
-            'apiKey': BINANCE_API_KEY,
-            'secret': BINANCE_SECRET_KEY,
+        exchange = ccxt.bitmex({
             'enableRateLimit': True,
         })
+        exchange.set_sandbox_mode(True) # Use the official method for testnet
         
         # --- 2. Fetch all data since the start date ---
-        ohlcv = _fetch_all_candles_since(exchange, 'BTC/USDT', bin_size, fetch_start_timestamp)
+        ohlcv = _fetch_all_candles_since(exchange, 'XBTUSD', bin_size, fetch_start_timestamp)
         
         if not ohlcv:
             return jsonify({'error': 'No data found for the specified date range.'}), 404

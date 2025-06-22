@@ -477,3 +477,230 @@
 2025-06-01 17:50:53,983 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
 2025-06-01 21:30:52,586 - INFO -  * Detected change in '/Users/erhangocmez/testnet_feed_project/app.py', reloading
 2025-06-01 21:30:52,685 - INFO -  * Restarting with stat
+2025-06-21 14:54:13,889 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5003
+2025-06-21 14:54:13,890 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-21 14:54:13,891 - INFO -  * Restarting with stat
+2025-06-21 14:54:14,188 - WARNING -  * Debugger is active!
+2025-06-21 14:54:14,349 - INFO - Updated binance BTC: 0.000051 @ $103887.10
+2025-06-21 14:54:14,373 - INFO -  * Debugger PIN: 777-840-461
+2025-06-21 14:54:14,649 - INFO - Updated binance BTC: 0.000051 @ $103887.10
+2025-06-21 14:54:15,636 - INFO - Updated okx BTC: 0.000034 @ $103896.30
+2025-06-21 14:54:16,310 - INFO - Updated okx BTC: 0.000034 @ $103896.30
+2025-06-21 14:54:16,556 - INFO - Updated bybit BTC: -0.000025 @ $103878.20
+2025-06-21 14:54:17,244 - INFO - Updated bybit BTC: -0.000025 @ $103878.20
+2025-06-21 14:54:19,074 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-21 14:54:19,653 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-21 14:54:19,656 - INFO - Updated kucoin BTC: 0.000056 @ $103925.38
+2025-06-21 14:54:21,391 - INFO - Updated kucoin BTC: 0.000056 @ $103925.46
+2025-06-21 14:54:24,576 - INFO - Updated gate BTC: 0.000011 @ $103891.11
+2025-06-21 14:54:24,576 - INFO - Updated gate BTC: 0.000011 @ $103891.11
+2025-06-21 14:54:25,103 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-21 14:54:25,104 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-21 14:54:33,355 - INFO - 127.0.0.1 - - [21/Jun/2025 14:54:33] "GET / HTTP/1.1" 200 -
+2025-06-21 14:54:34,169 - INFO - 127.0.0.1 - - [21/Jun/2025 14:54:34] "GET /funding-rates/matrix HTTP/1.1" 200 -
+2025-06-21 14:54:34,283 - INFO - 127.0.0.1 - - [21/Jun/2025 14:54:34] "GET /historical-data HTTP/1.1" 200 -
+2025-06-21 14:54:34,346 - INFO - 127.0.0.1 - - [21/Jun/2025 14:54:34] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-21 14:54:34,507 - INFO - 127.0.0.1 - - [21/Jun/2025 14:54:34] "GET /api/kraken-balances HTTP/1.1" 200 -
+2025-06-21 14:55:27,991 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5003
+2025-06-21 14:55:27,991 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-21 14:55:27,992 - INFO -  * Restarting with stat
+2025-06-21 14:55:28,265 - WARNING -  * Debugger is active!
+2025-06-21 14:55:28,293 - INFO -  * Debugger PIN: 777-840-461
+2025-06-21 14:55:28,569 - INFO - Updated binance BTC: 0.000052 @ $103878.25
+2025-06-21 14:55:28,727 - INFO - Updated binance BTC: 0.000052 @ $103878.25
+2025-06-21 14:55:29,497 - INFO - Updated okx BTC: 0.000034 @ $103874.90
+2025-06-21 14:55:29,594 - INFO - Updated okx BTC: 0.000034 @ $103874.90
+2025-06-21 14:55:30,514 - INFO - Updated bybit BTC: -0.000025 @ $103850.80
+2025-06-21 14:55:30,516 - INFO - Updated bybit BTC: -0.000025 @ $103850.80
+2025-06-21 14:55:33,022 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-21 14:55:33,022 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-21 14:55:34,142 - INFO - Updated kucoin BTC: 0.000056 @ $103925.45
+2025-06-21 14:55:34,488 - INFO - Updated kucoin BTC: 0.000056 @ $103917.77
+2025-06-21 14:55:37,287 - INFO - Updated gate BTC: 0.000011 @ $103874.90
+2025-06-21 14:55:37,917 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-21 14:55:39,291 - INFO - 127.0.0.1 - - [21/Jun/2025 14:55:39] "GET / HTTP/1.1" 200 -
+2025-06-21 14:55:39,352 - INFO - 127.0.0.1 - - [21/Jun/2025 14:55:39] "GET /funding-rates/matrix HTTP/1.1" 200 -
+2025-06-21 14:55:39,494 - INFO - 127.0.0.1 - - [21/Jun/2025 14:55:39] "GET /historical-data HTTP/1.1" 200 -
+2025-06-21 14:55:39,726 - INFO - 127.0.0.1 - - [21/Jun/2025 14:55:39] "GET /api/kraken-balances HTTP/1.1" 200 -
+2025-06-21 14:55:40,868 - INFO - Updated gate BTC: 0.000011 @ $103874.90
+2025-06-21 14:55:41,523 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-21 14:56:37,598 - INFO - 127.0.0.1 - - [21/Jun/2025 14:56:37] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2025-06-21 14:56:37,639 - INFO - 127.0.0.1 - - [21/Jun/2025 14:56:37] "GET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-06-21 14:56:37,640 - INFO - 127.0.0.1 - - [21/Jun/2025 14:56:37] "GET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-06-21 14:56:37,666 - INFO - 127.0.0.1 - - [21/Jun/2025 14:56:37] "GET /?__debugger__=yes&cmd=resource&f=console.png&s=nqLUWpJIDatXZ8qIEJqj HTTP/1.1" 200 -
+2025-06-22 12:02:01,075 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-22 12:02:01,075 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-22 12:02:01,947 - INFO - Updated binance BTC: 0.000100 @ $102756.99
+2025-06-22 12:02:03,289 - INFO - Updated okx BTC: 0.000049 @ $102720.60
+2025-06-22 12:02:04,314 - INFO - Updated bybit BTC: 0.000071 @ $102697.80
+2025-06-22 12:02:06,947 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-22 12:02:08,920 - INFO - Updated kucoin BTC: -0.000031 @ $102788.26
+2025-06-22 12:02:11,189 - INFO - 127.0.0.1 - - [22/Jun/2025 12:02:11] "GET / HTTP/1.1" 200 -
+2025-06-22 12:02:12,218 - INFO - 127.0.0.1 - - [22/Jun/2025 12:02:12] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:02:13,162 - INFO - Updated gate BTC: 0.000097 @ $102722.42
+2025-06-22 12:02:13,878 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-22 12:03:55,679 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-22 12:03:55,681 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-22 12:03:56,304 - INFO - Updated binance BTC: 0.000100 @ $102697.60
+2025-06-22 12:03:57,236 - INFO - Updated okx BTC: 0.000049 @ $102695.20
+2025-06-22 12:03:58,216 - INFO - Updated bybit BTC: 0.000071 @ $102690.80
+2025-06-22 12:04:00,394 - INFO - 127.0.0.1 - - [22/Jun/2025 12:04:00] "GET / HTTP/1.1" 200 -
+2025-06-22 12:04:00,712 - INFO - 127.0.0.1 - - [22/Jun/2025 12:04:00] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:04:00,851 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-22 12:04:04,240 - INFO - Updated kucoin BTC: -0.000032 @ $102738.53
+2025-06-22 12:04:04,242 - INFO - 127.0.0.1 - - [22/Jun/2025 12:04:04] "GET / HTTP/1.1" 200 -
+2025-06-22 12:04:04,450 - INFO - 127.0.0.1 - - [22/Jun/2025 12:04:04] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:04:07,752 - INFO - Updated gate BTC: 0.000095 @ $102714.10
+2025-06-22 12:04:08,852 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-22 12:04:49,069 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-22 12:04:49,070 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-22 12:04:49,684 - INFO - Updated binance BTC: 0.000100 @ $102726.03
+2025-06-22 12:04:50,763 - INFO - Updated okx BTC: 0.000049 @ $102726.00
+2025-06-22 12:04:51,849 - INFO - Updated bybit BTC: 0.000071 @ $102714.20
+2025-06-22 12:04:53,646 - INFO - 127.0.0.1 - - [22/Jun/2025 12:04:53] "GET / HTTP/1.1" 200 -
+2025-06-22 12:04:53,872 - INFO - 127.0.0.1 - - [22/Jun/2025 12:04:53] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:04:54,343 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-22 12:04:55,871 - INFO - Updated kucoin BTC: -0.000031 @ $102769.14
+2025-06-22 12:05:00,477 - INFO - Updated gate BTC: 0.000095 @ $102723.02
+2025-06-22 12:05:01,122 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-22 12:05:59,542 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-22 12:05:59,543 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-22 12:06:00,103 - INFO - Updated binance BTC: 0.000100 @ $102688.92
+2025-06-22 12:06:01,146 - INFO - Updated okx BTC: 0.000049 @ $102688.70
+2025-06-22 12:06:02,105 - INFO - Updated bybit BTC: 0.000071 @ $102676.80
+2025-06-22 12:06:04,622 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-22 12:06:05,207 - INFO - Updated kucoin BTC: -0.000032 @ $102730.37
+2025-06-22 12:06:08,767 - INFO - Updated gate BTC: 0.000093 @ $102679.85
+2025-06-22 12:06:09,314 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-22 12:06:16,761 - INFO - 127.0.0.1 - - [22/Jun/2025 12:06:16] "GET / HTTP/1.1" 200 -
+2025-06-22 12:06:17,028 - INFO - 127.0.0.1 - - [22/Jun/2025 12:06:17] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:08:06,170 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-22 12:08:06,172 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-22 12:08:06,784 - INFO - Updated binance BTC: 0.000100 @ $102576.78
+2025-06-22 12:08:07,834 - INFO - Updated okx BTC: 0.000048 @ $102572.60
+2025-06-22 12:08:09,027 - INFO - Updated bybit BTC: 0.000071 @ $102557.80
+2025-06-22 12:08:10,436 - INFO - 127.0.0.1 - - [22/Jun/2025 12:08:10] "GET / HTTP/1.1" 200 -
+2025-06-22 12:08:10,602 - INFO - 127.0.0.1 - - [22/Jun/2025 12:08:10] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:08:11,675 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-22 12:08:12,457 - INFO - Updated kucoin BTC: -0.000034 @ $102633.38
+2025-06-22 12:08:17,212 - INFO - Updated gate BTC: 0.000091 @ $102582.30
+2025-06-22 12:08:17,810 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-22 12:10:17,411 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-22 12:10:17,412 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-22 12:10:18,020 - INFO - Updated binance BTC: 0.000100 @ $102513.00
+2025-06-22 12:10:19,282 - INFO - Updated okx BTC: 0.000048 @ $102509.70
+2025-06-22 12:10:20,486 - INFO - Updated bybit BTC: 0.000071 @ $102505.50
+2025-06-22 12:10:22,640 - INFO - 127.0.0.1 - - [22/Jun/2025 12:10:22] "GET / HTTP/1.1" 200 -
+2025-06-22 12:10:22,812 - INFO - 127.0.0.1 - - [22/Jun/2025 12:10:22] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:10:23,201 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-22 12:10:23,910 - INFO - Updated kucoin BTC: -0.000034 @ $102546.80
+2025-06-22 12:10:29,384 - INFO - 127.0.0.1 - - [22/Jun/2025 12:10:29] "GET / HTTP/1.1" 200 -
+2025-06-22 12:10:29,597 - INFO - 127.0.0.1 - - [22/Jun/2025 12:10:29] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:10:31,434 - INFO - Updated gate BTC: 0.000091 @ $102516.10
+2025-06-22 12:10:32,411 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-22 12:11:52,936 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-22 12:11:52,937 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-22 12:11:53,663 - INFO - Updated binance BTC: 0.000100 @ $102528.72
+2025-06-22 12:11:54,550 - INFO - Updated okx BTC: 0.000048 @ $102524.20
+2025-06-22 12:11:56,181 - INFO - Updated bybit BTC: 0.000071 @ $102522.00
+2025-06-22 12:11:58,679 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-22 12:11:59,494 - INFO - Updated kucoin BTC: -0.000033 @ $102561.49
+2025-06-22 12:12:00,160 - INFO - 127.0.0.1 - - [22/Jun/2025 12:12:00] "GET / HTTP/1.1" 200 -
+2025-06-22 12:12:00,360 - INFO - 127.0.0.1 - - [22/Jun/2025 12:12:00] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:12:02,658 - INFO - Updated gate BTC: 0.000090 @ $102529.23
+2025-06-22 12:12:03,187 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-22 12:12:27,880 - INFO - 127.0.0.1 - - [22/Jun/2025 12:12:27] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:12:35,350 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:12:35,391 - INFO - 127.0.0.1 - - [22/Jun/2025 12:12:35] "GET /api/lrc-data?binSize=1h&useDateRange=true&startTimestamp=1750514400&deviations=1,2,3,4 HTTP/1.1" 200 -
+2025-06-22 12:19:08,552 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-22 12:19:08,553 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-22 12:19:09,181 - INFO - Updated binance BTC: 0.000100 @ $102471.90
+2025-06-22 12:19:10,102 - INFO - Updated okx BTC: 0.000048 @ $102472.40
+2025-06-22 12:19:11,154 - INFO - Updated bybit BTC: 0.000071 @ $102460.20
+2025-06-22 12:19:13,656 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-22 12:19:15,634 - INFO - 127.0.0.1 - - [22/Jun/2025 12:19:15] "GET /lrc HTTP/1.1" 200 -
+2025-06-22 12:19:16,150 - INFO - Updated kucoin BTC: -0.000031 @ $102511.46
+2025-06-22 12:19:22,459 - INFO - Updated gate BTC: 0.000089 @ $102470.66
+2025-06-22 12:19:23,204 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-22 12:19:25,933 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:19:25,975 - INFO - 127.0.0.1 - - [22/Jun/2025 12:19:25] "GET /api/lrc-data?binSize=1h&useDateRange=true&startTimestamp=1750514400&inflectionTimestamp=1750514400&deviations=1,2,3,4 HTTP/1.1" 200 -
+2025-06-22 12:20:08,988 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:20:09,029 - INFO - 127.0.0.1 - - [22/Jun/2025 12:20:09] "GET /api/lrc-data?binSize=1h&useDateRange=true&startTimestamp=1750255200&inflectionTimestamp=1750514400&deviations=1,2,3,4 HTTP/1.1" 200 -
+2025-06-22 12:27:25,705 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:27:25,746 - INFO - 127.0.0.1 - - [22/Jun/2025 12:27:25] "GET /api/lrc-data?binSize=1h&useDateRange=true&startTimestamp=1750255200&inflectionTimestamp=1749600000&deviations=1,2,3,4 HTTP/1.1" 200 -
+2025-06-22 12:27:47,703 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:27:47,743 - INFO - 127.0.0.1 - - [22/Jun/2025 12:27:47] "GET /api/lrc-data?binSize=1h&useDateRange=true&startTimestamp=1749564000&inflectionTimestamp=1749600000&deviations=1,2,3,4 HTTP/1.1" 200 -
+2025-06-22 12:27:52,481 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:27:52,527 - INFO - 127.0.0.1 - - [22/Jun/2025 12:27:52] "GET /api/lrc-data?binSize=1h&useDateRange=true&startTimestamp=1749564000&inflectionTimestamp=1749600000&deviations=1,2,3,4 HTTP/1.1" 200 -
+2025-06-22 12:29:13,942 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:29:14,093 - INFO - 127.0.0.1 - - [22/Jun/2025 12:29:14] "GET /api/lrc-data?binSize=1m&useDateRange=true&startTimestamp=1749564000&inflectionTimestamp=1749600000&deviations=1,2,3,4 HTTP/1.1" 200 -
+2025-06-22 12:29:16,981 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:29:17,192 - INFO - 127.0.0.1 - - [22/Jun/2025 12:29:17] "GET /api/lrc-data?binSize=1m&useDateRange=true&startTimestamp=1749564000&inflectionTimestamp=1749600000&deviations=1,2,3,4 HTTP/1.1" 200 -
+2025-06-22 12:30:31,089 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:30:31,184 - INFO - 127.0.0.1 - - [22/Jun/2025 12:30:31] "GET /api/lrc-data?binSize=1m&useDateRange=true&startTimestamp=1749564000&inflectionTimestamp=1750556220&deviations=1,2,3,4 HTTP/1.1" 200 -
+2025-06-22 12:37:57,993 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-22 12:37:57,993 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-22 12:37:58,601 - INFO - Updated binance BTC: 0.000098 @ $102348.43
+2025-06-22 12:37:59,539 - INFO - Updated okx BTC: 0.000052 @ $102330.60
+2025-06-22 12:38:00,560 - INFO - Updated bybit BTC: 0.000071 @ $102328.60
+2025-06-22 12:38:03,131 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-22 12:38:04,831 - INFO - 127.0.0.1 - - [22/Jun/2025 12:38:04] "GET /lrc HTTP/1.1" 200 -
+2025-06-22 12:38:04,923 - INFO - Updated kucoin BTC: -0.000034 @ $102368.56
+2025-06-22 12:38:10,410 - INFO - Updated gate BTC: 0.000088 @ $102337.97
+2025-06-22 12:38:11,304 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-22 12:38:17,067 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:38:17,110 - INFO - 127.0.0.1 - - [22/Jun/2025 12:38:17] "GET /api/lrc-data?binSize=1h&useDateRange=true&startTimestamp=1750514400&inflectionTimestamp=1750514400&deviations=1,2,3,4 HTTP/1.1" 200 -
+2025-06-22 12:38:23,382 - INFO - 127.0.0.1 - - [22/Jun/2025 12:38:23] "GET / HTTP/1.1" 200 -
+2025-06-22 12:38:24,492 - INFO - 127.0.0.1 - - [22/Jun/2025 12:38:24] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:38:29,158 - INFO - 127.0.0.1 - - [22/Jun/2025 12:38:29] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:38:34,177 - INFO - 127.0.0.1 - - [22/Jun/2025 12:38:34] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:38:39,485 - INFO - 127.0.0.1 - - [22/Jun/2025 12:38:39] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:38:44,340 - INFO - 127.0.0.1 - - [22/Jun/2025 12:38:44] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:38:55,899 - INFO - 127.0.0.1 - - [22/Jun/2025 12:38:55] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:38:56,065 - INFO - 127.0.0.1 - - [22/Jun/2025 12:38:56] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:39:02,953 - INFO - 127.0.0.1 - - [22/Jun/2025 12:39:02] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:40:10,608 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-22 12:40:10,609 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-22 12:40:11,357 - INFO - Updated binance BTC: 0.000097 @ $102393.50
+2025-06-22 12:40:12,403 - INFO - Updated okx BTC: 0.000052 @ $102403.20
+2025-06-22 12:40:13,409 - INFO - Updated bybit BTC: 0.000071 @ $102379.30
+2025-06-22 12:40:16,021 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-22 12:40:17,127 - INFO - Updated kucoin BTC: -0.000033 @ $102415.25
+2025-06-22 12:40:17,855 - INFO - 127.0.0.1 - - [22/Jun/2025 12:40:17] "GET /lrc HTTP/1.1" 200 -
+2025-06-22 12:40:20,531 - INFO - Updated gate BTC: 0.000088 @ $102368.35
+2025-06-22 12:40:20,699 - ERROR - Error in /api/lrc-data: bitmex {"error":{"message":"Not Found","name":"HTTPError"}}
+2025-06-22 12:40:20,701 - INFO - 127.0.0.1 - - [22/Jun/2025 12:40:20] "[35m[1mGET /api/lrc-data?binSize=1h&useDateRange=true&startTimestamp=1750514400&inflectionTimestamp=1750514400&deviations=1,2,3,4 HTTP/1.1[0m" 500 -
+2025-06-22 12:40:21,172 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-22 12:41:31,565 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-22 12:41:31,566 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-22 12:41:32,052 - INFO - Updated binance BTC: 0.000097 @ $102360.21
+2025-06-22 12:41:33,029 - INFO - Updated okx BTC: 0.000053 @ $102368.00
+2025-06-22 12:41:34,385 - INFO - Updated bybit BTC: 0.000071 @ $102359.50
+2025-06-22 12:41:35,278 - INFO - 127.0.0.1 - - [22/Jun/2025 12:41:35] "GET /lrc HTTP/1.1" 200 -
+2025-06-22 12:41:37,387 - ERROR - Error fetching bitmex BTC: Network error: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+2025-06-22 12:41:38,436 - INFO - Updated kucoin BTC: -0.000033 @ $102403.36
+2025-06-22 12:41:40,741 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:41:40,744 - INFO - 127.0.0.1 - - [22/Jun/2025 12:41:40] "GET /api/lrc-data?binSize=1h&useDateRange=true&startTimestamp=1750514400&inflectionTimestamp=1750514400&deviations=1,2,3,4 HTTP/1.1" 200 -
+2025-06-22 12:41:41,972 - INFO - Updated gate BTC: 0.000088 @ $102390.40
+2025-06-22 12:41:42,574 - INFO - Updated dydx BTC: 0.000000 @ $68766.45
+2025-06-22 12:41:59,393 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:41:59,401 - INFO - 127.0.0.1 - - [22/Jun/2025 12:41:59] "GET /api/lrc-data?binSize=1m&useDateRange=true&startTimestamp=1750514400&inflectionTimestamp=1750514400&deviations=1,2,3,4 HTTP/1.1" 200 -
+2025-06-22 12:44:28,853 - INFO - 127.0.0.1 - - [22/Jun/2025 12:44:28] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:44:42,130 - INFO - 127.0.0.1 - - [22/Jun/2025 12:44:42] "GET /historical-data?binSize=1h HTTP/1.1" 200 -
+2025-06-22 12:46:34,870 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:46:34,882 - INFO - 127.0.0.1 - - [22/Jun/2025 12:46:34] "GET /api/lrc-data?binSize=1m&useDateRange=true&startTimestamp=1750514400&inflectionTimestamp=1750428000&deviations=1,2,3,4 HTTP/1.1" 200 -
+2025-06-22 12:46:39,659 - INFO - Successfully saved LRC parameters to lrc_params.json
+2025-06-22 12:46:39,663 - INFO - 127.0.0.1 - - [22/Jun/2025 12:46:39] "GET /api/lrc-data?binSize=5m&useDateRange=true&startTimestamp=1750514400&inflectionTimestamp=1750428000&deviations=1,2,3,4 HTTP/1.1" 200 -

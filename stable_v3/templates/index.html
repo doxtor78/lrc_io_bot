@@ -222,6 +222,8 @@
 
         let candleSeries = null;
         let lrcSeries = []; // To hold all LRC related line series
+        let currentBinSize = '1h';
+        let chartUpdateInterval = null;
 
         // --- Modal & Form Logic ---
         const modal = document.getElementById('lrc-settings-modal');
@@ -243,86 +245,51 @@
         });
 
         // --- Main Charting Function ---
-        async function fetchAndDrawChart(binSize = '1h') {
+        async function fetchAndDrawChart(binSize) {
             chartStatus.textContent = `Loading ${binSize} data...`;
-            chartTitle.textContent = `Binance BTC/USDT Price Chart (${binSize})`;
+            chartTitle.textContent = `BitMEX XBTUSD Price Chart (${binSize})`;
 
-            // --- Clear all previous series to ensure correct layering ---
-            lrcSeries.forEach(series => chart.removeSeries(series));
-            lrcSeries = [];
-            if (candleSeries) {
-                chart.removeSeries(candleSeries);
-                candleSeries = null;
-            }
-
-            const showLrc = document.getElementById('toggle-lrc-btn').classList.contains('active');
-            
-            let url = `/historical-data?binSize=${binSize}`;
-            let lrcParams = '';
-
-            if (showLrc) {
-                const useDateRange = useDateRangeCheckbox.checked;
-                let startTimestamp = '';
-
-                if (useDateRange) {
-                    const year = document.getElementById('lrc-start-year').value;
-                    const month = document.getElementById('lrc-start-month').value;
-                    const day = document.getElementById('lrc-start-day').value;
-                    const hour = document.getElementById('lrc-start-hour').value;
-                    const minute = document.getElementById('lrc-start-minute').value;
-                    const second = document.getElementById('lrc-start-second').value;
-                    // Construct a date object in UTC
-                    const startDate = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
-                    startTimestamp = Math.floor(startDate.getTime() / 1000);
-                }
-                
-                const deviations = Array.from(document.querySelectorAll('input[id^="lrc-dev-"]:checked'))
-                                       .map(cb => cb.value).join(',');
-                
-                lrcParams = `&useDateRange=${useDateRange}&startTimestamp=${startTimestamp}&deviations=${deviations}`;
-                url = `/api/lrc-data?binSize=${binSize}${lrcParams}`;
+            // On initial full load, clear previous series
+            if (binSize !== currentBinSize || !candleSeries) {
+                if(candleSeries) chart.removeSeries(candleSeries);
+                candleSeries = chart.addCandlestickSeries({
+                    upColor: '#26a69a', downColor: '#ef5350',
+                    borderDownColor: '#ef5350', borderUpColor: '#26a69a',
+                    wickDownColor: '#ef5350', wickUpColor: '#26a69a'
+                });
             }
 
             try {
-                const response = await fetch(url);
+                const response = await fetch(`/historical-data?binSize=${binSize}`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data = await response.json();
 
-                if (data.error) {
-                    throw new Error(data.error);
+                if (binSize !== currentBinSize || candleSeries.data.length === 0) {
+                    // Full data load
+                    candleSeries.setData(data);
+                    if(data.length > 0) chart.timeScale().fitContent();
+                } else if (data.length > 0) {
+                    // Live update: just update the latest candle
+                    candleSeries.update(data[data.length - 1]);
                 }
-
-                const candles = showLrc ? data.candles : data;
-                const lrcData = showLrc ? data.lrc : null;
-
-                // --- Draw chart elements in the correct order ---
                 
-                // 1. Draw background zones first
-                if (showLrc && lrcData && lrcData.params) {
-                    drawLRCZones(lrcData);
-                }
-
-                // 2. Draw candles on top of zones
-                candleSeries = chart.addCandlestickSeries({
-                    upColor: 'rgba(38, 166, 154, 1)',
-                    downColor: 'rgba(239, 83, 80, 1)',
-                    borderDownColor: 'rgba(239, 83, 80, 1)',
-                    borderUpColor: 'rgba(38, 166, 154, 1)',
-                    wickDownColor: 'rgba(239, 83, 80, 1)',
-                    wickUpColor: 'rgba(38, 166, 154, 1)',
-                });
-                candleSeries.setData(candles);
-                
-                // 3. Draw lines on top of candles
-                if (showLrc && lrcData && lrcData.params) {
-                    drawLRCLines(lrcData);
-                }
-
-                chart.timeScale().fitContent();
-                chartStatus.textContent = 'Last updated: ' + new Date().toLocaleTimeString();
+                currentBinSize = binSize;
+                chartStatus.textContent = 'Live data from BitMEX Testnet. Last update: ' + new Date().toLocaleTimeString();
             } catch (error) {
                 console.error('Failed to fetch chart data:', error);
                 chartStatus.textContent = `Error: ${error.message}`;
             }
+        }
+
+        function startLiveUpdates(binSize) {
+            // Clear any existing interval
+            if (chartUpdateInterval) {
+                clearInterval(chartUpdateInterval);
+            }
+            // Fetch initial data
+            fetchAndDrawChart(binSize);
+            // Set new interval for live updates (e.g., every 5 seconds)
+            chartUpdateInterval = setInterval(() => fetchAndDrawChart(binSize), 5000);
         }
 
         function drawLRCZones(lrcData) {
@@ -411,10 +378,11 @@
         }
 
         // --- Event Listeners ---
-        document.querySelectorAll('.timeframe-btn').forEach(button => {
-            if (button.dataset.binSize) {
-                button.addEventListener('click', () => fetchAndDrawChart(button.dataset.binSize));
-            }
+        document.querySelectorAll('.timeframe-btn[data-bin-size]').forEach(button => {
+            button.addEventListener('click', function() {
+                const binSize = this.getAttribute('data-bin-size');
+                startLiveUpdates(binSize);
+            });
         });
 
         const toggleLrcBtn = document.getElementById('toggle-lrc-btn');
@@ -433,8 +401,12 @@
             fetchAndDrawChart(currentBinSize);
         });
         
-        // Initial chart load
-        fetchAndDrawChart('1h');
+        // Initial load
+        startLiveUpdates(currentBinSize);
+        
+        window.addEventListener('resize', () => {
+            chart.resize(chartElement.clientWidth, 400);
+        });
     });
     </script>
 </body>

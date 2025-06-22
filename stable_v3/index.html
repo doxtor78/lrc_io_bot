@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitMEX Testnet XBTUSD Dashboard</title>
+    <!-- Lightweight Charts CDN -->
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- Suppress Apple touch icons -->
+    <link rel="apple-touch-icon" href="/static/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="/static/favicon.ico">
+    <style>
+        #status {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>BitMEX Testnet XBTUSD Dashboard</h1>
+    <!-- Chart container -->
+    <div id="chart" style="width: 800px; height: 400px;"></div>
+    <!-- Status message -->
+    <div id="status">Loading chart...</div>
+    <p>Data sourced from <a href="https://testnet.bitmex.com/app/trade/XBTUSD" target="_blank">BitMEX Testnet</a></p>
+    <footer>
+        Powered by <a href="https://www.tradingview.com/" target="_blank">TradingView</a>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>

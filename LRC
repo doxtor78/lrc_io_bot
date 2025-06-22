@@ -1,0 +1,235 @@
+//@version=6
+indicator("LRC with Fibo 2.1 - trend", overlay=true, max_bars_back=5000)
+
+// Notice about 50-sample requirement
+if bar_index == 0
+    label.new(bar_index, high, "Note: For a stable Linear Regression Channel, a minimum of 50 samples is recommended.", 
+              color=color.gray, textcolor=color.white, style=label.style_label_down)
+
+// Input parameters
+useDateRange = input.bool(true, title="Use Date Range")
+start_year = input.int(2025, title="Start Year", minval=1970, maxval=2100)
+start_month = input.int(3, title="Start Month", minval=1, maxval=12)
+start_day = input.int(11, title="Start Day", minval=1, maxval=31)
+start_hour = input.int(0, title="Start Hour", minval=0, maxval=23)
+start_minute = input.int(0, title="Start Minute", minval=0, maxval=59)
+start_second = input.int(0, title="Start Second", minval=0, maxval=59)
+sourceInput = input.source(close, title="Source")
+
+// Convert input date and time to timestamp
+start_date = timestamp(start_year, start_month, start_day, start_hour, start_minute, start_second)
+
+// Channel settings
+group1 = "Channel Settings"
+extendLeftInput = input.bool(false, "Extend Lines Left", group=group1)
+extendRightInput = input.bool(true, "Extend Lines Right", group=group1)
+extendStyle = switch
+    extendLeftInput and extendRightInput => extend.both
+    extendLeftInput => extend.left
+    extendRightInput => extend.right
+    => extend.none
+useUpperDevInput = input.bool(true, title="Upper Deviation", inline="Upper Deviation", group=group1)
+upperMultInput = input.float(4.0, title="", inline="Upper Deviation", group=group1)
+useLowerDevInput = input.bool(true, title="Lower Deviation", inline="Lower Deviation", group=group1)
+lowerMultInput = input.float(4.0, title="", inline="Lower Deviation", group=group1)
+baselineWidth = input.int(1, title="Baseline Width", minval=1, maxval=10, group=group1)
+upperLineWidth = input.int(1, title="Upper Line Width", minval=1, maxval=10, group=group1)
+lowerLineWidth = input.int(1, title="Lower Line Width", minval=1, maxval=10, group=group1)
+
+// Color settings
+group3 = "Color Settings"
+colorUpperOuterMiddle = input.color(color.new(color.red, 95), "Upper Channel Outer 1/2 & Middle 1/4 Color", group=group3)
+colorUpperInner = input.color(color.new(color.yellow, 95), "Upper Channel Inner 1/4 Color", group=group3)
+colorLowerOuterMiddle = input.color(color.new(color.blue, 95), "Lower Channel Outer 1/4 & Middle 1/4 Color", group=group3)
+colorLowerInner = input.color(color.new(color.green, 95), "Lower Channel Inner 1/4 Color", group=group3)
+colorUpperline = input.color(color.gray, "Upper Line Color", inline="upperline", group=group3)
+upperlineTransparency = input.int(0, "Transparency", minval=0, maxval=100, inline="upperline", group=group3)
+colorLowerline = input.color(color.gray, "Lower Line Color", inline="lowerline", group=group3)
+lowerlineTransparency = input.int(0, "Transparency", minval=0, maxval=100, inline="lowerline", group=group3)
+colorBaseline = input.color(color.gray, "Baseline Color", inline="baseline", group=group3)
+baselineTransparency = input.int(0, "Transparency", minval=0, maxval=100, inline="baseline", group=group3)
+styleBaseline = line.style_dashed
+
+// Fibonacci settings
+showFiboLevels = input.bool(true, title="Show Fibonacci Levels", group="Fibonacci Settings")
+fiboColor = input.color(color.blue, title="Fibonacci Lines Color", group="Fibonacci Settings")
+fiboTransparency = input.int(50, title="Fibonacci Lines Transparency", minval=0, maxval=100, group="Fibonacci Settings")
+fiboStyle = input.string("Solid", title="Fibonacci Lines Style", options=["Solid", "Dashed", "Dotted"], group="Fibonacci Settings")
+fiboLineWidth = input.int(1, title="Fibonacci Lines Width", minval=1, maxval=10, group="Fibonacci Settings")
+
+fibo_ratios = array.from(0, 0.250, 0.500, 0.750, 1.000)
+
+// Determine the first valid bar for calculations
+var int first_valid_bar = na
+if useDateRange
+    if (na(first_valid_bar) and not na(close) and time >= start_date)
+        first_valid_bar := bar_index
+else
+    first_valid_bar := 0  // Start from the first available bar if useDateRange is false
+
+// Calculate the length for regression
+lengthInput = bar_index - first_valid_bar + 1
+
+// Define candle color (blue for 50th candle, na otherwise)
+candleColor = lengthInput == 50 ? color.blue : na
+
+// Plot candles with conditional color for both body and wick
+plotcandle(open, high, low, close, color=candleColor, wickcolor=candleColor)
+
+// Calculate slope, average, and intercept
+calcSlope(source, length) =>
+    if not barstate.islast or length <= 1
+        [float(na), float(na), float(na)]
+    else
+        sumX = 0.0
+        sumY = 0.0
+        sumXSqr = 0.0
+        sumXY = 0.0
+        for i = 0 to length - 1 by 1
+            val = source[i]
+            per = i + 1.0
+            sumX += per
+            sumY += val
+            sumXSqr += per * per
+            sumXY += val * per
+        slope = (length * sumXY - sumX * sumY) / (length * sumXSqr - sumX * sumX)
+        average = sumY / length
+        intercept = average - slope * sumX / length + slope
+        [slope, average, intercept]
+
+[s, a, i] = calcSlope(sourceInput, lengthInput)
+
+// Calculate start and end prices
+startPrice = i + s * (lengthInput - 1)
+endPrice = i
+
+// Draw baseline
+var line baseLine = na
+if na(baseLine) and not na(startPrice)
+    baseLine := line.new(bar_index - lengthInput + 1, startPrice, bar_index, endPrice, width=baselineWidth, extend=extendStyle, color=color.new(colorBaseline, baselineTransparency), style=styleBaseline)
+else
+    line.set_xy1(baseLine, bar_index - lengthInput + 1, startPrice)
+    line.set_xy2(baseLine, bar_index, endPrice)
+    line.set_color(baseLine, color.new(colorBaseline, baselineTransparency))
+
+// Calculate deviation
+calcDev(source, length, slope, average, intercept) =>
+    upDev = 0.0
+    dnDev = 0.0
+    stdDevAcc = 0.0
+    dsxx = 0.0
+    dsyy = 0.0
+    dsxy = 0.0
+    periods = length - 1
+    daY = intercept + slope * periods / 2
+    val = intercept
+    for j = 0 to periods by 1
+        price = high[j] - val
+        if price > upDev
+            upDev := price
+        price := val - low[j]
+        if price > dnDev
+            dnDev := price
+        price := source[j]
+        dxt = price - average
+        dyt = val - daY
+        price -= val
+        stdDevAcc += price * price
+        dsxx += dxt * dxt
+        dsyy += dyt * dyt
+        dsxy += dxt * dyt
+        val += slope
+    stdDev = math.sqrt(stdDevAcc / (periods == 0 ? 1 : periods))
+    pearsonR = dsxx == 0 or dsyy == 0 ? 0 : dsxy / math.sqrt(dsxx * dsyy)
+    [stdDev, pearsonR, upDev, dnDev]
+
+[stdDev, pearsonR, upDev, dnDev] = calcDev(sourceInput, lengthInput, s, a, i)
+
+// Calculate upper and lower channel prices
+upperStartPrice = startPrice + upperMultInput * stdDev
+upperEndPrice = endPrice + upperMultInput * stdDev
+lowerStartPrice = startPrice - lowerMultInput * stdDev
+lowerEndPrice = endPrice - lowerMultInput * stdDev
+
+// Calculate split points: midpoint (1/2) and quarter (1/4) from baseline
+upperMidStart = startPrice + (upperStartPrice - startPrice) * 0.5
+upperMidEnd = endPrice + (upperEndPrice - endPrice) * 0.5
+upperQuarterStart = startPrice + (upperStartPrice - startPrice) * 0.25
+upperQuarterEnd = endPrice + (upperEndPrice - endPrice) * 0.25
+lowerMidStart = startPrice - (startPrice - lowerStartPrice) * 0.5
+lowerMidEnd = endPrice - (endPrice - lowerEndPrice) * 0.5
+lowerQuarterStart = startPrice - (startPrice - lowerStartPrice) * 0.25
+lowerQuarterEnd = endPrice - (endPrice - lowerEndPrice) * 0.25
+
+// Draw upper and lower channel lines
+var line upper = na
+var line lower = na
+var line upperMid = na
+var line upperQuarter = na
+var line lowerMid = na
+var line lowerQuarter = na
+
+if useUpperDevInput
+    if na(upper) and not na(upperStartPrice)
+        upper := line.new(bar_index - lengthInput + 1, upperStartPrice, bar_index, upperEndPrice, width=upperLineWidth, extend=extendStyle, color=color.new(colorUpperline, upperlineTransparency))
+        upperMid := line.new(bar_index - lengthInput + 1, upperMidStart, bar_index, upperMidEnd, width=upperLineWidth, extend=extendStyle, color=color.new(colorUpperline, upperlineTransparency))
+        upperQuarter := line.new(bar_index - lengthInput + 1, upperQuarterStart, bar_index, upperQuarterEnd, width=upperLineWidth, extend=extendStyle, color=color.new(colorUpperline, upperlineTransparency))
+    else
+        line.set_xy1(upper, bar_index - lengthInput + 1, upperStartPrice)
+        line.set_xy2(upper, bar_index, upperEndPrice)
+        line.set_color(upper, color.new(colorUpperline, upperlineTransparency))
+        line.set_xy1(upperMid, bar_index - lengthInput + 1, upperMidStart)
+        line.set_xy2(upperMid, bar_index, upperMidEnd)
+        line.set_color(upperMid, color.new(colorUpperline, upperlineTransparency))
+        line.set_xy1(upperQuarter, bar_index - lengthInput + 1, upperQuarterStart)
+        line.set_xy2(upperQuarter, bar_index, upperQuarterEnd)
+        line.set_color(upperQuarter, color.new(colorUpperline, upperlineTransparency))
+
+if useLowerDevInput
+    if na(lower) and not na(lowerStartPrice)
+        lower := line.new(bar_index - lengthInput + 1, lowerStartPrice, bar_index, lowerEndPrice, width=lowerLineWidth, extend=extendStyle, color=color.new(colorLowerline, lowerlineTransparency))
+        lowerMid := line.new(bar_index - lengthInput + 1, lowerMidStart, bar_index, lowerMidEnd, width=lowerLineWidth, extend=extendStyle, color=color.new(colorLowerline, lowerlineTransparency))
+        lowerQuarter := line.new(bar_index - lengthInput + 1, lowerQuarterStart, bar_index, lowerQuarterEnd, width=lowerLineWidth, extend=extendStyle, color=color.new(colorLowerline, lowerlineTransparency))
+    else
+        line.set_xy1(lower, bar_index - lengthInput + 1, lowerStartPrice)
+        line.set_xy2(lower, bar_index, lowerEndPrice)
+        line.set_color(lower, color.new(colorLowerline, lowerlineTransparency))
+        line.set_xy1(lowerMid, bar_index - lengthInput + 1, lowerMidStart)
+        line.set_xy2(lowerMid, bar_index, lowerMidEnd)
+        line.set_color(lowerMid, color.new(colorLowerline, lowerlineTransparency))
+        line.set_xy1(lowerQuarter, bar_index - lengthInput + 1, lowerQuarterStart)
+        line.set_xy2(lowerQuarter, bar_index, lowerQuarterEnd)
+        line.set_color(lowerQuarter, color.new(colorLowerline, lowerlineTransparency))
+
+// Fill the channels with two colors
+if useUpperDevInput
+    linefill.new(upper, upperMid, color=colorUpperOuterMiddle)     // Outer 1/2
+    linefill.new(upperMid, upperQuarter, color=colorUpperOuterMiddle)  // Middle 1/4
+    linefill.new(upperQuarter, baseLine, color=colorUpperInner)    // Inner 1/4
+
+if useLowerDevInput
+    linefill.new(lower, lowerMid, color=colorLowerOuterMiddle)     // Outer 1/2
+    linefill.new(lowerMid, lowerQuarter, color=colorLowerOuterMiddle)  // Middle 1/4
+    linefill.new(lowerQuarter, baseLine, color=colorLowerInner)    // Inner 1/4
+
+// Draw Fibonacci levels
+if showFiboLevels
+    fiboLineStyle = fiboStyle == "Solid" ? line.style_solid : fiboStyle == "Dashed" ? line.style_dashed : line.style_dotted
+    for ratio in fibo_ratios
+        upperFiboStart = startPrice + (upperStartPrice - startPrice) * ratio
+        upperFiboEnd = endPrice + (upperEndPrice - endPrice) * ratio
+        lowerFiboStart = startPrice - (startPrice - lowerStartPrice) * ratio
+        lowerFiboEnd = endPrice - (endPrice - lowerEndPrice) * ratio
+        
+        fiboLineColor = ratio == 0.500 ? color.black : fiboColor
+        
+        line.new(bar_index - lengthInput + 1, upperFiboStart, bar_index, upperFiboEnd, 
+                 width=fiboLineWidth, color=color.new(fiboLineColor, fiboTransparency), style=fiboLineStyle, extend=extendStyle)
+        line.new(bar_index - lengthInput + 1, lowerFiboStart, bar_index, lowerFiboEnd, 
+                 width=fiboLineWidth, color=color.new(fiboLineColor, fiboTransparency), style=fiboLineStyle, extend=extendStyle)
+
+// Alarms
+alertcondition(close > upperEndPrice and close[1] <= upperEndPrice, title="Upper Deviation Crossed Up", message="Upper Deviation Crossed Up!")
+alertcondition(close < lowerEndPrice and close[1] >= lowerEndPrice, title="Lower Deviation Crossed Down", message="Lower Deviation Crossed Down!")
+alertcondition(close < endPrice and close[1] >= endPrice, title="Linear Regression Crossed Down", message="Linear Regression Crossed Down!")
+alertcondition(close > startPrice and close[1] <= startPrice, title="Linear Regression Crossed Up", message="Linear Regression Crossed Up!")
