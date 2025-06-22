@@ -19,10 +19,11 @@ __pycache__/
 *.sqlite3
 
 # Virtual Environments
-venv/
-cryptofolio_venv/
-coinstats_scraper/venv/
-kraken_viewer/venv/
+/venv/
+/cryptofolio_venv/
+/coinstats_scraper/venv/
+/kraken_viewer/venv/
+/bybit_testnet_project/venv/
 
 # Distribution / packaging
 .Python
