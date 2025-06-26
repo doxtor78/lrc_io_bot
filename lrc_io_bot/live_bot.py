@@ -43,10 +43,13 @@ def initialize_exchange():
 def get_current_position(exchange, symbol):
     """Fetches the current position size."""
     try:
-        positions = exchange.fetch_positions(symbols=[symbol])
-        if positions:
-            # fetch_positions returns a list, we get the first one.
-            position = positions[0]
+        # Fetch all open positions to be certain we get the right one.
+        all_positions = exchange.fetch_positions()
+        # Filter for the specific symbol we are trading.
+        symbol_position = [p for p in all_positions if p.get('info', {}).get('symbol') == symbol]
+
+        if symbol_position:
+            position = symbol_position[0]
             # 'contracts' is the standard field for position size in ccxt
             return position.get('contracts', 0)
         return 0
