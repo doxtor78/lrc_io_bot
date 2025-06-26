@@ -41,18 +41,24 @@ def initialize_exchange():
     return exchange
 
 def get_current_position(exchange, symbol):
-    """Fetches the current position size."""
+    """
+    Fetches the current position size.
+    This version fetches all positions and filters to find the correct one,
+    making it more robust, especially on restarts.
+    """
     try:
-        # Fetch all open positions to be certain we get the right one.
+        # Fetch all positions from the account
         all_positions = exchange.fetch_positions()
-        # Filter for the specific symbol we are trading.
-        symbol_position = [p for p in all_positions if p.get('info', {}).get('symbol') == symbol]
-
-        if symbol_position:
-            position = symbol_position[0]
-            # 'contracts' is the standard field for position size in ccxt
-            return position.get('contracts', 0)
+        
+        # Find the specific position for our symbol
+        for position in all_positions:
+            if position.get('info', {}).get('symbol') == symbol:
+                # 'contracts' is the standard field for position size in ccxt
+                return position.get('contracts', 0)
+        
+        # If the loop completes without finding our symbol, we have no position.
         return 0
+        
     except Exception as e:
         print(f"Error fetching position: {e}")
         return 0
@@ -105,6 +111,12 @@ def run_bot():
             if current_position_size == 0:
                 if latest_price < lower_band:
                     print(f"*** SIGNAL: Price {latest_price} is below lower band {lower_band}. Placing LONG order. ***")
+                    
+                    # --- SAFETY CHECK ---
+                    # Programmatically enforce that we only buy when our position is zero.
+                    # If this fails, the bot will stop, preventing unwanted positions.
+                    assert current_position_size == 0, f"SAFETY CHECK FAILED: Bot attempted to buy with an existing position of {current_position_size} contracts."
+
                     order = exchange.create_market_buy_order(SYMBOL, ORDER_SIZE)
                     print("Buy order placed:", json.dumps(order, indent=2))
                 else:
