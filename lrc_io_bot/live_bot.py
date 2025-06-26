@@ -41,15 +41,24 @@ def initialize_exchange():
     return exchange
 
 def get_current_position(exchange, symbol):
-    """Fetches the current position size."""
+    """
+    Fetches the current position size.
+    This version fetches all positions and filters to find the correct one,
+    making it more robust, especially on restarts.
+    """
     try:
-        positions = exchange.fetch_positions(symbols=[symbol])
-        if positions:
-            # fetch_positions returns a list, we get the first one.
-            position = positions[0]
-            # 'contracts' is the standard field for position size in ccxt
-            return position.get('contracts', 0)
+        # Fetch all positions from the account
+        all_positions = exchange.fetch_positions()
+        
+        # Find the specific position for our symbol
+        for position in all_positions:
+            if position.get('info', {}).get('symbol') == symbol:
+                # 'contracts' is the standard field for position size in ccxt
+                return position.get('contracts', 0)
+        
+        # If the loop completes without finding our symbol, we have no position.
         return 0
+        
     except Exception as e:
         print(f"Error fetching position: {e}")
         return 0
