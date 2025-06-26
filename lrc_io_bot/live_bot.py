@@ -102,6 +102,12 @@ def run_bot():
             if current_position_size == 0:
                 if latest_price < lower_band:
                     print(f"*** SIGNAL: Price {latest_price} is below lower band {lower_band}. Placing LONG order. ***")
+                    
+                    # --- SAFETY CHECK ---
+                    # Programmatically enforce that we only buy when our position is zero.
+                    # If this fails, the bot will stop, preventing unwanted positions.
+                    assert current_position_size == 0, f"SAFETY CHECK FAILED: Bot attempted to buy with an existing position of {current_position_size} contracts."
+
                     order = exchange.create_market_buy_order(SYMBOL, ORDER_SIZE)
                     print("Buy order placed:", json.dumps(order, indent=2))
                 else:
