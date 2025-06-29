@@ -1,0 +1,64 @@
+# Trading Bot System Architecture Summary (v2 - Detailed Grid Logic)
+
+## 1. High-Level Overview
+
+This document outlines a sophisticated, trend-following, mean-reversion grid trading system. The core principle is the separation of concerns and dynamic adaptation.
+
+- **Trend-Following:** The bot's bias (long vs. short) is determined by the slope of a Linear Regression Channel (LRC).
+- **Mean-Reversion Grid:** It enters positions by scaling in with multiple limit orders ("suborders") when the price deviates from the mean. It also exits with a grid of take-profit orders.
+- **Dynamic & Adaptive:** The entire grid of orders and the LRC are recalculated and updated after every candle close, making the system highly responsive to recent price action.
+
+---
+
+## 2. Core Components & Logic
+
+### a. Basic Concepts
+- **Inflection Point:** The LRC calculation is anchored to a manually set start date/time.
+- **Candle Close Confirmation:** All decisions and updates are triggered only on the close of a new candle for the chosen timeframe.
+
+### b. Entry Strategy
+- **Favorable Zones (Trend-Dependent):**
+    - **Uptrend (Positive LRC Slope):**
+        - **Long Entry Zone:** -1σ to -3σ
+        - **Short Entry Zone:** +2σ to +3σ (higher probability, smaller zone)
+    - **Downtrend (Negative LRC Slope):**
+        - **Short Entry Zone:** +1σ to +3σ
+        - **Long Entry Zone:** -2σ to -3σ (higher probability, smaller zone)
+- **Grid Generation:**
+    - A "main entry order" consists of **five equal, evenly distributed limit suborders** placed across the relevant "Favorable Zone".
+
+### c. Exit Strategy
+- **Take-Profit (TP) Grid:**
+    - TP orders are generated **only after the first entry suborder is filled**.
+    - A "main take-profit order" consists of **five equal, evenly distributed limit suborders**.
+    - These are placed on the **opposite side of the midline**, spread between 0σ and +/-3σ.
+- **Dual Stop-Loss System:**
+    - **Soft Stop Loss (SSL):**
+        - **Level:** 4σ
+        - **Trigger:** Price closes beyond 4σ AND **remains there for a specified time** (e.g., 30 mins).
+        - **Execution:** Triggers the `IO Bot` to close the position using **LIMIT orders** for a controlled, low-cost exit.
+    - **Hard Stop Loss (HSL):**
+        - **Level:** 5σ
+        - **Trigger:** Price **touches or moves beyond** 5σ. This is an immediate trigger.
+        - **Execution:** Triggers an immediate **MARKET order** to close the position. This is the emergency failsafe.
+
+### d. Order Lifecycle & Revoke Process
+- **Revoke Unfilled Entries:** After the **first TP suborder is executed**, all other pending entry suborders are immediately cancelled.
+- **Revoke Stop Loss:** After the **final TP suborder is executed** (trade is 100% complete), the SSL and HSL are cancelled.
+
+---
+
+## 3. Implementation Design & File Structure
+
+To build this system effectively, we will use a modular structure that separates concerns.
+
+- `lrc_grid_bot/`
+    - `config.py`: Static user settings (API keys, symbol, timeframe, inflection point, risk params).
+    - `state_manager.py`: Reads and writes the bot's dynamic state (current position, active orders) to a persistent file like `state.json`. Essential for crash recovery.
+    - `lrc_calculator.py`: Pure mathematical functions for calculating the LRC slope, intercept, and standard deviation.
+    - `exchange_manager.py`: Handles all communication with the exchange via CCXT. Places, cancels, and fetches orders and positions.
+    - `strategy.py`: The core "brains." Contains the logic for determining favorable zones and generating the entry/TP order grids based on LRC data.
+    - `main.py`: The main application loop. It orchestrates all components: fetches data, calls the calculator, runs the strategy, updates state, and instructs the exchange manager.
+    - `utils.py`: Helper functions, primarily for logging configuration.
+
+This structure ensures that the code is clean, testable, and easier to debug and maintain. 
